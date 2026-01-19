@@ -1,0 +1,141 @@
+# =================================================================
+#
+# Authors: Just van den Broecke <justb4@gmail.com>
+#          Tom Kralidis <tomkralidis@gmail.com>
+#          Francesco Bartoli <xbartolone@gmail.com>
+#
+# Copyright (c) 2019 Just van den Broecke
+# Copyright (c) 2020 Tom Kralidis
+# Copyright (c) 2020 Francesco Bartoli
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation
+# files (the "Software"), to deal in the Software without
+# restriction, including without limitation the rights to use,
+# copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following
+# conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+#
+# =================================================================
+
+
+# Default config for base Docker Image, override via DockerVolume
+# mapping with your own config.
+server:
+    bind:
+        host: 0.0.0.0
+        port: 80
+    url: https://$SERVER_NAME_epos$/$LOCATION_epos_pygeoapi$
+    mimetype: application/json; charset=UTF-8
+    encoding: utf-8
+    gzip: false
+    languages:
+        # First language is the default language
+        - it-IT
+        - en-US
+    cors: true
+    pretty_print: true
+    limits:
+        default_items: 20
+        max_items: 50
+    # templates: /path/to/templates
+    map:
+        url: https://tile.openstreetmap.org/{z}/{x}/{y}.png
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+#    ogc_schemas_location: /schemas.opengis.net
+
+# CUSTOM START HERE
+    manager:
+        name: PostgreSQL
+        connection:
+          host: $IP_ADDRESS_POSTGRES_SERVER$
+          port: $PORT_POSTGRES_SERVER$
+          database: ogc_api
+          user: ogc_api_user
+          password: user
+        output_dir: $PYGEOAPI_OUTPUT_DIR$
+# CUSTOM END HERE
+          
+
+logging:
+    level: ERROR
+    #logfile: /tmp/pygeoapi.log
+
+metadata:
+    identification:
+        title:
+                it: Geo-INQUIRE Saas WP5 (based on pygeoapi)
+        description:
+            it: pygeoapi fornisce API a dati geospaziali - In Geo-INQUIRE sono implementati servizi di processing
+            en: pygeoapi provides an API to geospatial data - Within Geo-INQUIRE are implemented processing services
+        keywords:
+            it:
+                - geospaziale
+                - processing service
+                - api
+            en:
+                - geospatial
+                - processing service
+                - api
+        keywords_type: theme
+        terms_of_service: https://creativecommons.org/licenses/by/4.0/
+        url: https://github.com/geopython/pygeoapi
+    license:
+        name: CC-BY 4.0 license
+        url: https://creativecommons.org/licenses/by/4.0/
+    provider:
+        name: INGV - Geo-INQUIRE
+        url: https://ingv.it/
+    contact:
+        name: Martinelli, Francesco
+        position: Tecnologist
+        address: Via Cesare Battisti, 53
+        city: Pisa
+        stateorprovince: Pisa
+        postalcode: 56125
+        country: Italy
+        phone: +xx-xxx-xxx-xxxx
+        fax: +xx-xxx-xxx-xxxx
+        email: francesco.martinelli@ingv.it
+        url: Contact URL
+        hours: Mo-Fr 08:00-17:00
+        instructions: During hours of service. Off on weekends.
+        role: pointOfContact
+
+resources:
+
+# CUSTOM START HERE
+    solwcad:
+        type: process
+        processor:
+            name: 'ingv_plugin_pygeoapi.process.solwcad.SolwcadProcessor'
+            private_processor_dir: $PYGEOAPI_BASE_PRIVATE_DIRECTORY$/$SOLWCAD_SERVICE_ID$/
+            url_executor: $SOLWCAD_URL_BASE$
+            #remote_execute_synch: False # default value = True
+            polling_time: 3 # default value = 3
+            # max_waiting_time: # default value = 1
+
+    conduit:
+        type: process
+        processor:
+            name: 'ingv_plugin_pygeoapi.process.conduit.ConduitProcessor'
+            private_processor_dir: $PYGEOAPI_BASE_PRIVATE_DIRECTORY$/$CONDUIT_SERVICE_ID$/
+            url_executor: $CONDUIT_URL_BASE$
+            #remote_execute_synch: False # default value = True
+            polling_time: 3 # default value = 3
+            # max_waiting_time: # default value = 1
+# CUSTOM END HERE
+
