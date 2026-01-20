@@ -1,8 +1,8 @@
 # =================================================================
 #
-# Authors: Tom Kralidis <tomkralidis@gmail.com>
+# Authors: Francesco Martinelli <francesco.martinelli@ingv.it>
 #
-# Copyright (c) 2020 Tom Kralidis
+# Copyright (c) 2026 Francesco Martinelli
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -78,13 +78,11 @@ logging:
 metadata:
     identification:
         title:
-#            en: pygeoapi default instance
             it: Geo-INQUIRE Saas WP5 (based on pygeoapi)
-#            fr: instance par défaut de pygeoapi
+#            en: pygeoapi default instance
         description:
             it: pygeoapi fornisce API a dati geospaziali - In Geo-INQUIRE sono implementati servizi di processing
             en: pygeoapi provides an API to geospatial data - Within Geo-INQUIRE are implemented processing services
-#            fr: pygeoapi fournit une API aux données géospatiales
         keywords:
             it:
                 - geospaziale
@@ -95,10 +93,6 @@ metadata:
                 - processing service
                 - api
 #                - data
-#                - api
-#            fr:
-#                - géospatiale
-#                - données
 #                - api
         keywords_type: theme
         terms_of_service: https://creativecommons.org/licenses/by/4.0/
