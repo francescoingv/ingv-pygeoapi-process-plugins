@@ -1,0 +1,30 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# IDE/editor
+.vscode/
+*.code-workspace
+
+# Build / dist
+build/
+dist/
+*.egg-info
+
+# Ignore all requirements files (specific framework requirements must be used)
+requirements*
+
+# But keep the plugin specific requirements (if present)
+!requirements_plugin_ingv.txt
+
+# Ignore compilation of configuration files
+example-openapi.yml
+
+
