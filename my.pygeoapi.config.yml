@@ -7,6 +7,7 @@
 # Copyright (c) 2019 Just van den Broecke
 # Copyright (c) 2020 Tom Kralidis
 # Copyright (c) 2020 Francesco Bartoli
+# Copyright (c) 2026 Francesco Martinelli
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -34,11 +35,13 @@
 
 # Default config for base Docker Image, override via DockerVolume
 # mapping with your own config.
+
+# NOTE: placeholders are replaced at build-time via Dockerfile (sed)
 server:
     bind:
         host: 0.0.0.0
         port: 80
-    url: https://$SERVER_NAME_epos$/$LOCATION_epos_pygeoapi$
+    url: https://$SERVER_NAME$/$SERVER_LOCATION$
     mimetype: application/json; charset=UTF-8
     encoding: utf-8
     gzip: false
