@@ -205,6 +205,7 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
                 response = requests.get(execute_url)
                 if not response.ok:
                     try:
+                        shutil.rmtree(working_dir)
                         message = response.json()['Message']
                         raise ProcessorExecuteError(message)
                     except Exception:
@@ -227,9 +228,12 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
                 f"The job '{info['job_id']}' "
                 f"exited with code {info['job_info']['exit_code']}"
             )
+            # do not remove working_dir for debugging purpose
             raise ProcessorExecuteError(message)
         
         mimetype, process_outputs = self.prepare_output(info, working_dir, outputs)
+        # content of working_dir no more usefull
+        shutil.rmtree(working_dir)
 
         return mimetype, process_outputs
 

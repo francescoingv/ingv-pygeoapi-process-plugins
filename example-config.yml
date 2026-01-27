@@ -350,6 +350,15 @@ resources:
             #remote_execute_synch: False # default value = True
             polling_time: 3 # default value = 3
 
+    pybox:
+        type: process
+        processor:
+            name: 'ingv_plugin_pygeoapi.process.pybox.PyboxProcessor'
+            private_processor_dir: /home/francesco/Progetti/OGC_API/clone_pygeoapi/custom_process_dir/pybox/
+            url_executor: 'http://127.0.0.1:5001'
+            #remote_execute_synch: False # default value = True
+            polling_time: 3 # default value = 3
+
 #    new_solwcad:
 #        type: process
 #        processor:

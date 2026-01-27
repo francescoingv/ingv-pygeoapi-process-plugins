@@ -127,138 +127,168 @@ PROCESS_METADATA = {
                                     'Initial guess for the numerical algorithm. '
                                     'Default value: 1.0E8. If the code does not '
                                     'converge, you can play around with this value.',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             },
                             'p': {
                                 'type': 'number',
                                 'title': 'Pressure [Pa]',
                                 'description':
                                     'Pressure in the magma chamber.',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             },
                             't': {
                                 'type': 'number',
                                 'title': 'Temperature [K]',
                                 'description':
                                     'Constant magma temperature',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             },
                             'd': {
                                 'type': 'number',
                                 'title': 'Conduit diameter [m]',
                                 'description':
                                     'Diameter of the cylindrical conduit',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             },
                             'l': {
                                 'type': 'number',
                                 'title': 'Conduit length [m]',
                                 'description':
                                     'Length of the cylindrical conduit',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             },
                             'sio2': {
                                 'type': 'number',
                                 'title': 'SiO_2',
                                 'description':
                                     'Melt composition: Weight fraction of SiO_2.',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'tio2': {
                                 'type': 'number',
                                 'title': 'TiO_2',
                                 'description':
                                     'Melt composition: Weight fraction of TiO_2',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'al2o3': {
                                 'type': 'number',
                                 'title': 'Al_2O_3',
                                 'description':
                                     'Melt composition: Weight fraction of Al_2O_3',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'fe2o3': {
                                 'type': 'number',
                                 'title': 'Fe_2O_3',
                                 'description':
                                     'Melt composition: Weight fraction of Fe_2O_3',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'feo': {
                                 'type': 'number',
                                 'title': 'FeO',
                                 'description':
                                     'Melt composition: Weight fraction of FeO',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'mno': {
                                 'type': 'number',
                                 'title': 'MnO',
                                 'description':
                                     'Melt composition: Weight fraction of MnO',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'mgo': {
                                 'type': 'number',
                                 'title': 'MgO',
                                 'description':
                                     'Melt composition: Weight fraction of MgO',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'cao': {
                                 'type': 'number',
                                 'title': 'CaO',
                                 'description':
                                     'TBD: spiegazione',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'nao2': {
                                 'type': 'number',
                                 'title': 'TBD: significato',
                                 'description':
                                     'TBD: spiegazione',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'k2o': {
                                 'type': 'number',
                                 'title': 'K_2O',
                                 'description':
                                     'Melt composition: Weight fraction of K_2O',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'h2o': {
                                 'type': 'number',
                                 'title': 'H_2O',
                                 'description':
                                     'Volatiles: Weight fraction of total H_2O',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'co2': {
                                 'type': 'number',
                                 'title': 'CO_2',
                                 'description':
                                     'Volatiles: Weight fraction of total CO_2',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'b': {
                                 'type': 'number',
                                 'title': 'BND [m^{-3}]',
                                 'description':
                                     'Bubble Number Density',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             }
                         }
                     },
@@ -281,153 +311,186 @@ PROCESS_METADATA = {
                                     'Initial guess for the numerical algorithm. '
                                     'Default value: 1.0E8. If the code does not '
                                     'converge, you can play around with this value.',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             },
                             'p': {
                                 'type': 'number',
                                 'title': 'Pressure [Pa]',
                                 'description':
                                     'Pressure in the magma chamber.',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             },
                             't': {
                                 'type': 'number',
                                 'title': 'Temperature [K]',
                                 'description':
                                     'Constant magma temperature',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             },
                             'd': {
                                 'type': 'number',
                                 'title': 'Conduit diameter [m]',
                                 'description':
                                     'Diameter of the cylindrical conduit',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             },
                             'l': {
                                 'type': 'number',
                                 'title': 'Conduit length [m]',
                                 'description':
                                     'Length of the cylindrical conduit',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             },
                             'sio2': {
                                 'type': 'number',
                                 'title': 'SiO_2',
                                 'description':
                                     'Melt composition: Weight fraction of SiO_2.',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'tio2': {
                                 'type': 'number',
                                 'title': 'TiO_2',
                                 'description':
                                     'Melt composition: Weight fraction of TiO_2',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'al2o3': {
                                 'type': 'number',
                                 'title': 'Al_2O_3',
                                 'description':
                                     'Melt composition: Weight fraction of Al_2O_3',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'fe2o3': {
                                 'type': 'number',
                                 'title': 'Fe_2O_3',
                                 'description':
                                     'Melt composition: Weight fraction of Fe_2O_3',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'feo': {
                                 'type': 'number',
                                 'title': 'FeO',
                                 'description':
                                     'Melt composition: Weight fraction of FeO',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'mno': {
                                 'type': 'number',
                                 'title': 'MnO',
                                 'description':
                                     'Melt composition: Weight fraction of MnO',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'mgo': {
                                 'type': 'number',
                                 'title': 'MgO',
                                 'description':
                                     'Melt composition: Weight fraction of MgO',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'cao': {
                                 'type': 'number',
                                 'title': 'CaO',
                                 'description':
                                     'TBD: spiegazione',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'nao2': {
                                 'type': 'number',
                                 'title': 'TBD: significato',
                                 'description':
                                     'TBD: spiegazione',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'k2o': {
                                 'type': 'number',
                                 'title': 'K_2O',
                                 'description':
                                     'Melt composition: Weight fraction of K_2O',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'h2o': {
                                 'type': 'number',
                                 'title': 'H_2O',
                                 'description':
                                     'Volatiles: Weight fraction of total H_2O',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'co2': {
                                 'type': 'number',
                                 'title': 'CO_2',
                                 'description':
                                     'Volatiles: Weight fraction of total CO_2',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 1.0
+                                'minimum': 0.0,
+                                'maximum': 1.0,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'b': {
                                 'type': 'number',
                                 'title': 'BND [m^{-3}]',
                                 'description':
                                     'Bubble Number Density',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             },
                             'c': {
                                 'type': 'number',
                                 'title': 'Crystal volume fraction',
                                 'description':
                                     'Volume fraction of crystals relative to a degassed magma.',
-                                'exclusiveMinimum': 0.0,
-                                'exclusiveMaximum': 0.7
+                                'minimum': 0.0,
+                                'maximum': 0.7,
+                                'exclusiveMinimum': True,
+                                'exclusiveMaximum': True
                             },
                             'den': {
                                 'type': 'number',
                                 'title': 'Crystal density [kg/m^3]',
                                 'description':
                                     'Average density of the crystal phase.',
-                                'exclusiveMinimum': 0.0
+                                'minimum': 0.0,
+                                'exclusiveMinimum': True
                             }
                         }
                     },
@@ -762,7 +825,8 @@ class ConduitProcessor(BaseRemoteExecutionProcessor):
                             'values': gas_volume_fraction
                         }
                     ]
-                }
+                },
+                'mediaType': 'application/json'
             }
 
         if 'grafico_2' in requested_outputs:
@@ -785,7 +849,8 @@ class ConduitProcessor(BaseRemoteExecutionProcessor):
                             'values': liquid_velocity
                         },
                     ]
-                }
+                },
+                'mediaType': 'application/json'
             }
 
         if 'grafico_3' in requested_outputs:
@@ -803,7 +868,8 @@ class ConduitProcessor(BaseRemoteExecutionProcessor):
                             'values': pressure
                         },
                     ]
-                }
+                },
+                'mediaType': 'application/json'
             }
         
         if 'csv' in requested_outputs:

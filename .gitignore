@@ -27,4 +27,7 @@ requirements*
 # Ignore compilation of configuration files
 example-openapi.yml
 
+# Ignore specific development guidelines
+LEGGIMI.txt
+
 
