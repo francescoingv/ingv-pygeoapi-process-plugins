@@ -222,11 +222,11 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
                 f"Error message:\n{info['job_info']['std_err']}"
             )
             logging.error(error_msg)
-            # Don't return complete message to client:
-            # could contain security info.
+            # Possibly not return message to client: could contain security info.
             message = (
                 f"The job '{info['job_id']}' "
-                f"exited with code {info['job_info']['exit_code']}"
+                f"exited with code {info['job_info']['exit_code']} "
+                f": {info['job_info']['std_err']} "
             )
             # do not remove working_dir for debugging purpose
             raise ProcessorExecuteError(message)

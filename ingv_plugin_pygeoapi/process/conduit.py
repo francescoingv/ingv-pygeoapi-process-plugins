@@ -509,15 +509,18 @@ PROCESS_METADATA = {
                 'contentMediaType': 'application/json', # da verificare che sia corretto .
                 'type': 'object',
                 'required': [
-                    'Domain', 'Series'
+                    'chartType', 'domain', 'series'
                 ],
                 'properties': {
-                    'Domain': {
+                    'chartType' :{
+                        'type': 'string'
+                    },
+                    'domain': {
                         'type': 'object',
-                        'required': [
-                            'label', 'unit', 'values'
-                        ],
                         'properties': {
+                            'key': {
+                                'type': 'string'
+                            },
                             'label': {
                                 'type': 'string'
                             },
@@ -532,14 +535,14 @@ PROCESS_METADATA = {
                             }
                         }
                     },
-                    'Series': {
+                    'series': {
                         'type': 'array',
                         'items': {
                             'type': 'object',
-                            'required': [
-                                'label', 'unit', 'values'
-                            ],
                             'properties': {
+                                'key': {
+                                    'type': 'string'
+                                },
                                 'label': {
                                     'type': 'string'
                                 },
@@ -568,15 +571,18 @@ PROCESS_METADATA = {
                 'contentMediaType': 'application/json', # da verificare che sia corretto .
                 'type': 'object',
                 'required': [
-                    'Domain', 'Series'
+                    'chartType', 'domain', 'series'
                 ],
                 'properties': {
-                    'Domain': {
+                    'chartType' :{
+                        'type': 'string'
+                    },
+                    'domain': {
                         'type': 'object',
-                        'required': [
-                            'label', 'unit', 'values'
-                        ],
                         'properties': {
+                            'key': {
+                                'type': 'string'
+                            },
                             'label': {
                                 'type': 'string'
                             },
@@ -591,14 +597,14 @@ PROCESS_METADATA = {
                             }
                         }
                     },
-                    'Series': {
+                    'series': {
                         'type': 'array',
                         'items': {
                             'type': 'object',
-                            'required': [
-                                'label', 'unit', 'values'
-                            ],
                             'properties': {
+                                'key': {
+                                    'type': 'string'
+                                },
                                 'label': {
                                     'type': 'string'
                                 },
@@ -627,15 +633,18 @@ PROCESS_METADATA = {
                 'contentMediaType': 'application/json', # da verificare che sia corretto .
                 'type': 'object',
                 'required': [
-                    'Domain', 'Series'
+                    'chartType', 'domain', 'series'
                 ],
                 'properties': {
-                    'Domain': {
+                    'chartType' :{
+                        'type': 'string'
+                    },
+                    'domain': {
                         'type': 'object',
-                        'required': [
-                            'label', 'unit', 'values'
-                        ],
                         'properties': {
+                            'key': {
+                                'type': 'string'
+                            },
                             'label': {
                                 'type': 'string'
                             },
@@ -650,14 +659,14 @@ PROCESS_METADATA = {
                             }
                         }
                     },
-                    'Series': {
+                    'series': {
                         'type': 'array',
                         'items': {
                             'type': 'object',
-                            'required': [
-                                'label', 'unit', 'values'
-                            ],
                             'properties': {
+                                'key': {
+                                    'type': 'string'
+                                },
                                 'label': {
                                     'type': 'string'
                                 },
@@ -813,13 +822,16 @@ class ConduitProcessor(BaseRemoteExecutionProcessor):
         if 'grafico_1' in requested_outputs:
             produced_outputs['grafico_1'] = {
                 'value': {
-                    'Domain': {
+                    'chartType': 'line',
+                    'domain': {
+                        'key': 'Conduit length',
                         'label': 'Conduit length',
                         'unit': 'm',
                         'values': x_vals
                     },
-                    'Series': [
+                    'series': [
                         {
+                            'key': 'Gas volume fraction',
                             'label': 'Gas volume fraction',
                             'unit': '',
                             'values': gas_volume_fraction
@@ -832,18 +844,22 @@ class ConduitProcessor(BaseRemoteExecutionProcessor):
         if 'grafico_2' in requested_outputs:
             produced_outputs['grafico_2'] = {
                 'value': {
-                    'Domain': {
+                    'chartType': 'line',
+                    'domain': {
+                        'key': 'Conduit length',
                         'label': 'Conduit length',
                         'unit': 'm',
                         'values': x_vals
                     },
-                    'Series': [
+                    'series': [
                         {
+                            'key': 'Gas velocity',
                             'label': 'Gas velocity',
                             'unit': 'm/s',
                             'values': gas_velocity
                         },
                         {
+                            'key': 'Liquid velocity',
                             'label': 'Liquid velocity',
                             'unit': 'm/s',
                             'values': liquid_velocity
@@ -856,13 +872,16 @@ class ConduitProcessor(BaseRemoteExecutionProcessor):
         if 'grafico_3' in requested_outputs:
             produced_outputs['grafico_3'] = {
                 'value': {
-                    'Domain': {
+                    'chartType': 'line',
+                    'domain': {
+                        'key': 'Conduit length',
                         'label': 'Conduit length',
                         'unit': 'm',
                         'values': x_vals
                     },
-                    'Series': [
+                    'series': [
                         {
+                            'key': 'Pressure',
                             'label': 'Pressure',
                             'unit': 'Mpa',
                             'values': pressure

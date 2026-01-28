@@ -255,7 +255,7 @@ PROCESS_METADATA = {
                 "contentMediaType": "application/tiff; application=geotiff"
             }
         },
-        'temporal_evolution': {
+        'spatial_evolution': {
             'title': 'Spatial evolution of current mean properties.',
             'description':
                 'Spatial evolution of current mean properties.',
@@ -265,15 +265,18 @@ PROCESS_METADATA = {
                 'contentMediaType': 'application/json', # da verificare che sia corretto .
                 'type': 'object',
                 'required': [
-                    'Domain', 'Series'
+                    'chartType', 'domain', 'series'
                 ],
                 'properties': {
-                    'Domain': {
+                    'chartType' :{
+                        'type': 'string'
+                    },
+                    'domain': {
                         'type': 'object',
-                        'required': [
-                            'label', 'unit', 'values'
-                        ],
                         'properties': {
+                            'key': {
+                                'type': 'string'
+                            },
                             'label': {
                                 'type': 'string'
                             },
@@ -291,14 +294,14 @@ PROCESS_METADATA = {
                             }
                         }
                     },
-                    'Series': {
+                    'series': {
                         'type': 'array',
                         'items': {
                             'type': 'object',
-                            'required': [
-                                'label', 'unit', 'values'
-                            ],
                             'properties': {
+                                'key': {
+                                    'type': 'string'
+                                },
                                 'label': {
                                     'type': 'string'
                                 },
@@ -330,19 +333,25 @@ PROCESS_METADATA = {
                 'contentMediaType': 'application/json', # da verificare che sia corretto .
                 'type': 'object',
                 'required': [
-                    'Domain', 'Series'
+                    'chartType', 'domain', 'series'
                 ],
                 'properties': {
-                    'Domain': {
+                    'chartType' :{
+                        'type': 'string'
+                    },
+                    'domain': {
                         'type': 'object',
-                        'required': [
-                            'label', 'unit', 'values'
-                        ],
                         'properties': {
+                            'key': {
+                                'type': 'string'
+                            },
                             'label': {
                                 'type': 'string'
                             },
                             'unit':  {
+                                'type': 'string'
+                            },
+                            'description': {
                                 'type': 'string'
                             },
                             'values': {
@@ -353,18 +362,21 @@ PROCESS_METADATA = {
                             }
                         }
                     },
-                    'Series': {
+                    'series': {
                         'type': 'array',
                         'items': {
                             'type': 'object',
-                            'required': [
-                                'label', 'unit', 'values'
-                            ],
                             'properties': {
+                                'key': {
+                                    'type': 'string'
+                                },
                                 'label': {
                                     'type': 'string'
                                 },
                                 'unit':  {
+                                    'type': 'string'
+                                },
+                                'description': {
                                     'type': 'string'
                                 },
                                 'values': {
@@ -397,26 +409,39 @@ PROCESS_METADATA = {
       }],
     'example': {
         'inputs': {
-            'components': {
-                'value': {'f': 1.0e8, 'p': 1.0e8, 't': 1050.0e0, 'd': 60.0e0,
-                          'l': 4000.0e0, 'sio2': 0.7669, 'tio2': 0.0012, 
-                          'al2o3': 0.1322, 'fe2o3': 0.0039, 'feo': 0.0038,
-                          'mno': 0.0007, 'mgo': 0.0006, 'cao': 0.0080, 
-                          'na2o': 0.0300, 'k2o': 0.0512, 'h2o': 0.0500e0,
-                          'co2': 0.0200e0, 'b': 1.0e11, 'c': 0.2e0, 'den': 2800.0e0
-                }
-            }
+            'lon': 90.88,
+            'lat': 14.47,
+            'l0': 150,
+            'h0': 150,
+            'theta0': 500,
+            'multiple_values': [{'eps0': 0.01, 'rhos': 1000, 'ds': 0.0001}],
+            'dt': 0.5,
+            'margin': 5000,
         },
         'outputs': {
-            'grafico_1': {
+            'input_data': {
                 'transmissionMode': 'value'
             },
-            'grafico_2': {
+            'dem': {
+                'transmissionMode': 'value'
+            },
+            'invasion_map': {
+                'transmissionMode': 'value'
+            },
+            'spatial_evolution': {
+                'transmissionMode': 'value'
+            },
+            'deposit_thickness': {
                 'transmissionMode': 'value'
             }
         }
     }
-    # curl localhost:5000/processes/conduit/execution -H 'Content-Type: application/json' -d '{ "inputs" : { "components" : { "value" : {"f": 1.0e8, "p": 1.0e8, "t": 1050.0e0, "d": 60.0e0, "l": 4000.0e0, "sio2": 0.7669, "tio2": 0.0012, "al2o3": 0.1322, "fe2o3": 0.0039, "feo": 0.0038, "mno": 0.0007, "mgo": 0.0006, "cao": 0.0080, "na2o": 0.0300, "k2o": 0.0512, "h2o": 0.0500e0, "co2": 0.0200e0, "b": 1.0e11, "c": 0.2e0, "den": 2800.0e0 } } }, "outputs" : { "grafico_1" : { "transmissionMode": "value" }, "grafico_2" : { "transmissionMode": "value" } } }'
+    # curl localhost:5000/processes/pybox/execution 
+    #       -H 'Content-Type: application/json' 
+    #       -d '{ "inputs" : { "lon" :  90.88, "lat" : 14.47, "l0" : 150, "h0" : 150, 
+    #                          "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}], 
+    #                          "dt" : 0.5, "margin" : 5000 }}'
+
     # curl localhost:5000/processes/conduit/execution -H 'Content-Type: application/json' -H 'Prefer: respond-async' -d '{ "inputs" : { "components" : { "value" : {"f": 1.0e8, "p": 1.0e8, "t": 1050.0e0, "d": 60.0e0, "l": 4000.0e0, "sio2": 0.7669, "tio2": 0.0012, "al2o3": 0.1322, "fe2o3": 0.0039, "feo": 0.0038, "mno": 0.0007, "mgo": 0.0006, "cao": 0.0080, "na2o": 0.0300, "k2o": 0.0512, "h2o": 0.0500e0, "co2": 0.0200e0, "b": 1.0e11, "c": 0.2e0, "den": 2800.0e0 } } }, "outputs" : { "grafico_1" : { "transmissionMode": "value" }, "grafico_2" : { "transmissionMode": "value" } } }'
     # curl -k -L -X POST "https://epos_geoinquire.pi.ingv.it/epos_pygeoapi/processes/conduit/execution" -H "Content-Type: application/json" -d '{ "inputs" : { "components" : { "value" : {"f": 1.0e8, "p": 1.0e8, "t": 1050.0e0, "d": 60.0e0, "l": 4000.0e0, "sio2": 0.7669, "tio2": 0.0012, "al2o3": 0.1322, "fe2o3": 0.0039, "feo": 0.0038, "mno": 0.0007, "mgo": 0.0006, "cao": 0.0080, "na2o": 0.0300, "k2o": 0.0512, "h2o": 0.0500e0, "co2": 0.0200e0, "b": 1.0e11, "c": 0.2e0, "den": 2800.0e0 } } }, "outputs" : { "grafico_1" : { "transmissionMode": "value" }, "grafico_2" : { "transmissionMode": "value" } } }'
     #
@@ -518,13 +543,13 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
                 mode='rb'
             ) as output_file:
                 contenuto_bytes = output_file.read()
-            produced_outputs['dem'] = {
+            produced_outputs['invasion_map'] = {
                 'value': base64.b64encode(contenuto_bytes).decode('utf-8'),
                 'encoding': 'base64',
                 'mediaType': 'application/tiff; application=geotiff'
             }
         
-        if 'temporal_evolution' in requested_outputs:
+        if 'spatial_evolution' in requested_outputs:
             x_length = []
             y_height = []
             y_rho_c = []
@@ -541,6 +566,8 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
                 mode='r'
             ) as output_file:
                 for line in output_file:
+                    # Rimuovi spazi
+                    line = line.strip()
                     # Salta righe vuote
                     if not line:
                         continue
@@ -549,8 +576,7 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
                     if not line[0].isdigit() and line[0] != '-':
                         continue
 
-                    # Rimuovi spazi e usa split per separare i valori
-                    parts = line.split()
+                    parts = [p.strip() for p in line.split(',')]
 
                     # Aggiungi i valori alle colonne
                     values = [float(p) for p in parts]
@@ -577,42 +603,49 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
             # serie fisse:
             series = [
                         {
+                            'key': 'height(m)',
                             'label': 'height(m)',
                             'unit': 'm',
                             'description': 'average thickness (height) of the current',
                             'values': y_height
                         },
                         {
+                            'key': 'rho_c(kg/m3)',
                             'label': 'rho_c(kg/m3)',
                             'unit': 'kg/m^3',
                             'description': 'bulk density of the current',
                             'values': y_rho_c
                         },
                         {
+                            'key': 'u(m/s)',
                             'label': 'u(m/s)',
                             'unit': 'm/s',
                             'description': 'front propagation velocity',
                             'values': y_u
                         },
                         {
+                            'key': 'TPE(J)',
                             'label': 'TPE(J)',
                             'unit': 'J',
                             'description': 'total potential energy',
                             'values': y_TPE
                         },
                         {
+                            'key': 'TKE(J)',
                             'label': 'TKE(J)',
                             'unit': 'J',
                             'description': 'total kinetic energy',
                             'values': y_TKE
                         },
                         {
+                            'key': 'hmax(m)',
                             'label': 'hmax(m)',
                             'unit': 'm',
                             'description': 'maximum run-up height (potential to overcome topographic obstacles)',
                             'values': y_hmax
                         },
                         {
+                            'key': 'time(s)',
                             'label': 'time(s)',
                             'unit': 's',
                             'description': 'time from the start of the propagation',
@@ -623,21 +656,24 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
             for i, eps_values in enumerate(y_eps_n):
                 series.append(
                     {
+                        'key': f'eps_{i}',
                         'label': f'eps_{i}',
                         'unit': '-',
                         'description': f'volume fraction of particle class {i}',
                         'values': eps_values
                     }
                 )
-            produced_outputs['temporal_evolution'] = {
+            produced_outputs['spatial_evolution'] = {
                 'value': {
-                    'Domain': {
+                    'chartType': 'line',
+                    'domain': {
+                        'key': 'length(m)',
                         'label': 'length(m)',
                         'description': 'distance of the current front from the vent',
                         'unit': 'm',
                         'values': x_length
                     },
-                    'Series': series
+                    'series': series
                 },
                 'mediaType': 'application/json'
             }
@@ -653,6 +689,8 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
                 mode='r'
             ) as output_file:
                 for line in output_file:
+                    # Rimuovi spazi
+                    line = line.strip()
                     # Salta righe vuote
                     if not line:
                         continue
@@ -661,9 +699,8 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
                     if not line[0].isdigit() and line[0] != '-':
                         continue
 
-                    # Rimuovi spazi e usa split per separare i valori
-                    parts = line.split()
-            
+                    parts = [p.strip() for p in line.split(',')]
+
                     # Aggiungi i valori alle colonne
                     values = [float(p) for p in parts]
                     x_position.append(values[0])
@@ -683,6 +720,7 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
             # serie fisse:
             series = [
                         {
+                            'key': 'total deposit thickness(m)',
                             'label': 'total deposit thickness(m)',
                             'unit': 'm',
                             'description': 'cumulative thickness of all deposited particle classes',
@@ -693,7 +731,8 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
             for i, thikness_values in enumerate(y_thikness_n):
                 series.append(
                     {
-                        'label': f'eps_{i}',
+                        'key': f'thickness_{i}',
+                        'label': f'thickness_{i}',
                         'unit': '-',
                         'description': f'granulometric class {i} deposit thickness(m)',
                         'values': thikness_values
@@ -701,13 +740,15 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
                 )
             produced_outputs['deposit_thickness'] = {
                 'value': {
-                    'Domain': {
+                    'chartType': 'line',
+                    'domain': {
+                        'key': 'current front position(m)',
                         'label': 'current front position(m)',
                         'description': 'front distance from vent at the moment of deposition',
                         'unit': 'm',
                         'values': x_position
                     },
-                    'Series': series
+                    'series': series
                 },
                 'mediaType': 'application/json'
             }
@@ -743,6 +784,20 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
         valori_ds = []
         try:
             for i, classe in enumerate(data['multiple_values'], 1):
+                # --- controllo tipo e chiavi ---
+                if not isinstance(classe, dict):
+                    raise ProcessorExecuteError(
+                        f"In multiple_values, item number {i} is not an object (dict)."
+                    )
+
+                required_keys = ['eps0', 'rhos', 'ds']
+                missing_keys = [k for k in required_keys if k not in classe]
+                if missing_keys:
+                    raise ProcessorExecuteError(
+                        f"In multiple_values, item number {i} is missing keys: {', '.join(missing_keys)}"
+                    )
+                
+                # Controllo valori
                 if not (0.001 <= classe['eps0'] <= 0.1):
                     raise ProcessorExecuteError(f"In multiple_values, item numer {i} of eps0: must be >=0.001 and <=0.1.")
                 if not (500 <= classe['rhos'] <= 3500):
@@ -757,6 +812,7 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
         except KeyError as e:
             err_msg = f"In multiple_values, the item numer {i} non conteneva la chiave {e}"
             raise ProcessorExecuteError(err_msg)
+        
         if sum(valori_eps0) >= 1:
             err_msg = f"In multiple_values, the sum of eps0 must be < 1"
             raise ProcessorExecuteError(err_msg)
