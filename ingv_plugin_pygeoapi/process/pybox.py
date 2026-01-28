@@ -94,10 +94,7 @@ PROCESS_METADATA = {
     # type: string
     
     'keywords': ['TBD'],
-    # type: array
-    #   items: type: string
 
-    # process.yaml
     'inputs': {
         # inputDescription.yaml
         'lat': {
@@ -219,14 +216,6 @@ PROCESS_METADATA = {
         }
     },
     'outputs': {
-#
-#"schema": { # per geotiff
-# {
-#  "type": "string",
-#  "contentEncoding": "binary",
-#  "contentMediaType": "application/tiff; application=geotiff"
-# }
-#}
         'input_data': {
             'title': 'Input parameters',
             'description':
@@ -259,8 +248,6 @@ PROCESS_METADATA = {
             'title': 'Spatial evolution of current mean properties.',
             'description':
                 'Spatial evolution of current mean properties.',
-#            'minOccurs': 1,
-#            'maxOccurs': 'unbounded',
             'schema': {
                 'contentMediaType': 'application/json', # da verificare che sia corretto .
                 'type': 'object',
@@ -327,8 +314,6 @@ PROCESS_METADATA = {
             'title': 'Deposit thickness left by the current with distance from vent.',
             'description':
                 'Deposit thickness left by the current with distance from vent.',
-#            'minOccurs': 1,
-#            'maxOccurs': 'unbounded',
             'schema': {
                 'contentMediaType': 'application/json', # da verificare che sia corretto .
                 'type': 'object',
@@ -391,14 +376,6 @@ PROCESS_METADATA = {
                 }
             }
         }
-#        'csv': {
-#            'title': 'Dati in formato csv',
-#            'description': 'TBD',
-#            'schema': {
-#                'type': 'string',
-#                'contentMediaType': 'text/csv'
-#            }
-#        }
     },
     'links': [{
         'type': 'text/html',
@@ -441,34 +418,10 @@ PROCESS_METADATA = {
     #       -d '{ "inputs" : { "lon" :  90.88, "lat" : 14.47, "l0" : 150, "h0" : 150, 
     #                          "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}], 
     #                          "dt" : 0.5, "margin" : 5000 }}'
-
-    # curl localhost:5000/processes/conduit/execution -H 'Content-Type: application/json' -H 'Prefer: respond-async' -d '{ "inputs" : { "components" : { "value" : {"f": 1.0e8, "p": 1.0e8, "t": 1050.0e0, "d": 60.0e0, "l": 4000.0e0, "sio2": 0.7669, "tio2": 0.0012, "al2o3": 0.1322, "fe2o3": 0.0039, "feo": 0.0038, "mno": 0.0007, "mgo": 0.0006, "cao": 0.0080, "na2o": 0.0300, "k2o": 0.0512, "h2o": 0.0500e0, "co2": 0.0200e0, "b": 1.0e11, "c": 0.2e0, "den": 2800.0e0 } } }, "outputs" : { "grafico_1" : { "transmissionMode": "value" }, "grafico_2" : { "transmissionMode": "value" } } }'
-    # curl -k -L -X POST "https://epos_geoinquire.pi.ingv.it/epos_pygeoapi/processes/conduit/execution" -H "Content-Type: application/json" -d '{ "inputs" : { "components" : { "value" : {"f": 1.0e8, "p": 1.0e8, "t": 1050.0e0, "d": 60.0e0, "l": 4000.0e0, "sio2": 0.7669, "tio2": 0.0012, "al2o3": 0.1322, "fe2o3": 0.0039, "feo": 0.0038, "mno": 0.0007, "mgo": 0.0006, "cao": 0.0080, "na2o": 0.0300, "k2o": 0.0512, "h2o": 0.0500e0, "co2": 0.0200e0, "b": 1.0e11, "c": 0.2e0, "den": 2800.0e0 } } }, "outputs" : { "grafico_1" : { "transmissionMode": "value" }, "grafico_2" : { "transmissionMode": "value" } } }'
+    # curl localhost:5000/processes/pybox/execution -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" :  -90.88, "lat" : 15.47, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : ["input_data", "dem", "spatial_evolution"] }'
+    # curl localhost:5000/processes/pybox/execution -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" :  -90.88, "lat" : 15.47, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : {"input_data": { "transmissionMode": "value" }, "dem" : { "transmissionMode": "value" }, "spatial_evolution": { "transmissionMode": "value" } } }'
+    # curl -k -L -X POST "https://epos_geoinquire.pi.ingv.it/epos_pygeoapi/processes/conduit/execution" -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" :  -90.88, "lat" : 15.47, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : ["input_data", "dem", "spatial_evolution"] }'
     #
-    # ovvero:
-    # curl localhost:5000/processes/conduit/execution 
-    #       -H 'Content-Type: application/json' 
-    #       -d '{ 
-    #               "inputs" : { 
-    #                   "components" : { 
-    #                       "value" : {
-    #                           "f": 1.0e8, "p": 1.0e8, "t": 1050.0e0, "d": 60.0e0, "l": 4000.0e0, 
-    #                           "sio2": 0.7669, "tio2": 0.0012, "al2o3": 0.1322, "fe2o3": 0.0039, 
-    #                           "feo": 0.0038, "mno": 0.0007, "mgo": 0.0006, "cao": 0.0080, "na2o": 0.0300, 
-    #                           "k2o": 0.0512, "h2o": 0.0500e0, "co2": 0.0200e0, "b": 1.0e11, "c": 0.2e0, 
-    #                           "den": 2800.0e0 
-    #                       } 
-    #                   } 
-    #               },
-    #               "outputs" : { 
-    #                   "grafico_1" : { 
-    #                       "transmissionMode": "value"
-    #                   }, 
-    #                   "grafico_2" : { 
-    #                       "transmissionMode": "value" 
-    #                   } 
-    #               } 
-    #           }'
 }
 
 
