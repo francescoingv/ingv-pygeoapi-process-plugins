@@ -140,5 +140,14 @@ resources:
             #remote_execute_synch: False # default value = True
             polling_time: 3 # default value = 3
             # max_waiting_time: # default value = 1
+
+    pybox:
+        type: process
+        processor:
+            name: 'ingv_plugin_pygeoapi.process.pybox.PyboxProcessor'
+            private_processor_dir: $PYGEOAPI_BASE_PRIVATE_DIRECTORY$/$PYBOX_SERVICE_ID$/
+            url_executor: $PYBOX_URL_BASE$
+            #remote_execute_synch: False # default value = True
+            polling_time: 3 # default value = 3
 # CUSTOM END HERE
 
