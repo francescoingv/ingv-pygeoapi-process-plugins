@@ -31,6 +31,7 @@ import logging
 import re
 import copy
 import base64
+import uuid
 
 from pathlib import Path
 
@@ -420,7 +421,7 @@ PROCESS_METADATA = {
     #                          "dt" : 0.5, "margin" : 5000 }}'
     # curl localhost:5000/processes/pybox/execution -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" :  -90.88, "lat" : 15.47, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : ["input_data", "dem", "spatial_evolution"] }'
     # curl localhost:5000/processes/pybox/execution -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" :  -90.88, "lat" : 15.47, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : {"input_data": { "transmissionMode": "value" }, "dem" : { "transmissionMode": "value" }, "spatial_evolution": { "transmissionMode": "value" } } }'
-    # curl -k -L -X POST "https://epos_geoinquire.pi.ingv.it/epos_pygeoapi/processes/conduit/execution" -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" :  -90.88, "lat" : 15.47, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : ["input_data", "dem", "spatial_evolution"] }'
+    # curl -k -L -X POST "https://epos_geoinquire.pi.ingv.it/epos_pygeoapi/processes/pybox/execution" -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" :  -90.88, "lat" : 15.47, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : ["input_data", "dem", "spatial_evolution"] }'
     # per asincrono aggiungere: -H "Prefer: respond-async"
     #
 }
@@ -707,7 +708,63 @@ class PyboxProcessor(BaseRemoteExecutionProcessor):
                 'mediaType': 'application/json'
             }
 
-        return mimetype, produced_outputs
+        # --- CASE 1: ONE OUTPUT ONLY ---
+        if len(produced_outputs) == 1:
+            output_id, output = next(iter(produced_outputs.items()))
+            mimetype = output['mediaType']
+
+            value = output['value']
+
+            # decode base64 if needed
+            if output.get('encoding') == 'base64':
+                body = base64.b64decode(value)
+            else:
+                # JSON or text
+                if isinstance(value, (dict, list)):
+                    import json
+                    body = json.dumps(value).encode('utf-8')
+                else:
+                    body = str(value).encode('utf-8')
+
+            return mimetype, body
+
+        # --- CASE 2: MULTIPLE OUTPUT -> multipart/related ---
+        boundary = f"boundary-{uuid.uuid4()}"
+        parts = []
+
+        for output_id, output in produced_outputs.items():
+            media_type = output['mediaType']
+            value = output['value']
+
+            # prepare payload
+            if output.get('encoding') == 'base64':
+                payload = base64.b64decode(value)
+                transfer_encoding = "binary"
+            else:
+                if isinstance(value, (dict, list)):
+                    import json
+                    payload = json.dumps(value).encode('utf-8')
+                else:
+                    payload = str(value).encode('utf-8')
+                transfer_encoding = "8bit"
+
+            part = (
+                f"--{boundary}\r\n"
+                f"Content-Type: {media_type}\r\n"
+                f"Content-ID: <{output_id}>\r\n"
+                f"Content-Transfer-Encoding: {transfer_encoding}\r\n"
+                f"\r\n"
+            ).encode('utf-8') + payload + b"\r\n"
+
+            parts.append(part)
+
+        # close multipart
+        parts.append(f"--{boundary}--\r\n".encode('utf-8'))
+
+        body = b"".join(parts)
+        mimetype = f'multipart/related; boundary="{boundary}"'
+
+        return mimetype, body
 
     def prepare_input(self, data, working_dir, outputs):
         if bool(outputs):
