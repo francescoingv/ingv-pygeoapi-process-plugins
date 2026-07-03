@@ -67,11 +67,11 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
 
        Expected payload:
        {
-           "application_params": {
-               "job_id": "<string>",
-               "synch_execution": <bool, optional>
+           'application_params': {
+               'job_id': '<string>',
+               'synch_execution': <bool, optional>
            },
-           "code_input_params": {
+           'code_input_params': {
                ... arbitrary input parameters ...
            }
        }
@@ -90,16 +90,16 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
 
        Returns:
        {
-           "job_id": "<string>",
-           "job_info": {
-               "received": "<timestamp>",
-               "start_processing": "<timestamp|optional>",
-               "end_processing": "<timestamp|optional>",
-               "exit_code": "<int|optional>",
-               "std_out": "<string|optional>",
-               "std_err": "<string|optional>"
+           'job_id': '<string>',
+           'job_info': {
+               'received': '<timestamp>',
+               'start_processing': '<timestamp|optional>',
+               'end_processing': '<timestamp|optional>',
+               'exit_code': '<int|optional>',
+               'std_out': '<string|optional>',
+               'std_err': '<string|optional>'
            },
-           "params": {
+           'params': {
                ... effective execution parameters ...
            }
        }
@@ -224,14 +224,14 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
             # By default should return all outputs defined by the service
             # with the "transmitionMode" set to "value" (the default)
             expected_output = {
-                output: {"transmissionMode": "value"}
-                for output in self.metadata.get("outputs", [])
+                output: {'transmissionMode': 'value'}
+                for output in self.metadata.get('outputs', [])
             }
         else:
             # Checking for outputs not passed as dictionary:
             if not isinstance(requested_output, dict):
                 raise ProcessorExecuteError(
-                    "Invalid outputs: required to be a dictionary."
+                    'Invalid outputs: required to be a dictionary.'
                 )
             expected_output = copy.deepcopy(requested_output)
 
@@ -241,15 +241,15 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
                 raise ProcessorExecuteError(err_msg)        
 
         # Checking for valid transmissionMode parameter
-        allowed_modes = self.metadata.get("outputTransmission", [])
+        allowed_modes = self.metadata.get('outputTransmission', [])
         for output_id, output_info in expected_output.items():
-            transmission_mode = output_info.setdefault("transmissionMode", "value")
+            transmission_mode = output_info.setdefault('transmissionMode', 'value')
 
             if transmission_mode not in allowed_modes:
                 raise ProcessorExecuteError(
-                    f"Invalid transmissionMode for {output_id}: "
-                    f"{transmission_mode}. Allowed values: "
-                    f"{allowed_modes}."
+                    f'Invalid transmissionMode for {output_id}: '
+                    f'{transmission_mode}. Allowed values: '
+                    f'{allowed_modes}.'
                 )
         
         return expected_output
@@ -281,7 +281,7 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
             raise ex
 
         # Call the processing server, always synch:
-        execute_url = urljoin(self.url_executor, "execute")
+        execute_url = urljoin(self.url_executor, 'execute')
         headers = {'Content-type': 'application/json'}
         response = requests.post(execute_url, json={
           'application_params': {
@@ -314,7 +314,7 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
             while True:
                 time.sleep(self.polling_time)
                 execute_url = urljoin(
-                    self.url_executor, "job_info/" + self.job_id
+                    self.url_executor, 'job_info/' + self.job_id
                 )
                 response = requests.get(execute_url)
                 if not response.ok:
@@ -331,16 +331,16 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
 
         if info['job_info']['exit_code'] != 0:
             error_msg = (
-                f"The job '{info['job_id']}' exited with code: "
-                f"{info['job_info']['exit_code']}\n"
-                f"Error message:\n{info['job_info']['std_err']}"
+                f'The job "{info["job_id"]}" exited with code: '
+                f'{info["job_info"]["exit_code"]}\n'
+                f'Error message:\n{info["job_info"]["std_err"]}'
             )
             logging.error(error_msg)
             # Possibly not return message to client: could contain security info.
             message = (
-                f"The job '{info['job_id']}' "
-                f"exited with code {info['job_info']['exit_code']} "
-                f": {info['job_info']['std_err']} "
+                f'The job "{info["job_id"]}" '
+                f'exited with code {info["job_info"]["exit_code"]} '
+                f': {info["job_info"]["std_err"]} '
             )
             # do not remove working_dir for debugging purpose
             raise ProcessorExecuteError(message)
@@ -379,11 +379,11 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
         # --- CASE X: ALL REFERENCE
 # TODO: when all produced_outputs contains href
         if not any(
-            "value" in output
+            'value' in output
             for output in produced_outputs.values()
         ):
             raise ProcessorExecuteError(
-                "All outputs requested by reference: Not yet implemented."
+                'All outputs requested by reference: Not yet implemented.'
             )
 
         # --- CASE 1: ONE OUTPUT ONLY ---
@@ -413,19 +413,19 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
             return mimetype, body
 
         # --- CASE 2: MULTIPLE OUTPUT -> multipart/related ---
-        boundary = f"boundary-{uuid.uuid4()}"
+        boundary = f'boundary-{uuid.uuid4()}'
         parts = []
 
         for output_id, output in produced_outputs.items():
             media_type = output['mediaType']
-            if "value" in output:
+            if 'value' in output:
                 value = output['value']
                 # prepare payload. NOTE: type(payload)==bytes
                 if output.get('encoding') == 'base64':
                     LOGGER.debug(f'output.get("encoding") == "base64"')
                     # the "value" is expected to be a "string" of a binary data encoded base64
                     payload = value.encode('utf-8')
-                    transfer_encoding = "base64"
+                    transfer_encoding = 'base64'
                 else:
                     if isinstance(value, (dict, list)):
                         import json
@@ -435,27 +435,27 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
                         if (type(value) == bytes):
                             payload = value
                         payload = value.encode('utf-8')
-                    transfer_encoding = "8bit"
+                    transfer_encoding = '8bit'
 
                 part = (
-                    f"--{boundary}\r\n"
-                    f"Content-Type: {media_type}\r\n"
-                    f"Content-ID: <{output_id}>\r\n"
+                    f'--{boundary}\r\n'
+                    f'Content-Type: {media_type}\r\n'
+                    f'Content-ID: <{output_id}>\r\n'
 
                     # TODO: Verify if Content-Transfer-Encoding is mandatory,
                     # and in case it is mandatory CHECK if it is correct,
                     # otherwise REMOVE it.
-                    f"Content-Transfer-Encoding: {transfer_encoding}\r\n"
-                    f"\r\n"
-                ).encode('utf-8') + payload + b"\r\n"
-            elif "href" in output:
-                payload = b""
+                    f'Content-Transfer-Encoding: {transfer_encoding}\r\n'
+                    f'\r\n'
+                ).encode('utf-8') + payload + b'\r\n'
+            elif 'href' in output:
+                payload = b''
 
                 part = (
-                    f"--{boundary}\r\n"
-                    f"Content-Type: {media_type}\r\n"
-                    f"Content-ID: <{output_id}>\r\n"
-                    f"Content-Location: {output['href']}\r\n"
+                    f'--{boundary}\r\n'
+                    f'Content-Type: {media_type}\r\n'
+                    f'Content-ID: <{output_id}>\r\n'
+                    f'Content-Location: {output["href"]}\r\n'
 
                     # TODO: Verify if Content-Transfer-Encoding is mandatory,
                     # and in case it is mandatory CHECK if it is correct,
@@ -464,16 +464,16 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
                     # We save binary data: transfer_encoding should be binary
                     # in this case, so should not be preset (default) for
                     # the given content type
-                    # f"Content-Transfer-Encoding: {transfer_encoding}\r\n"
-                    f"\r\n"
-                ).encode('utf-8') + payload + b"\r\n"
+                    # f'Content-Transfer-Encoding: {transfer_encoding}\r\n'
+                    f'\r\n'
+                ).encode('utf-8') + payload + b'\r\n'
 
             parts.append(part)
 
         # Close multipart
-        parts.append(f"--{boundary}--\r\n".encode('utf-8'))
+        parts.append(f'--{boundary}--\r\n'.encode('utf-8'))
 
-        body = b"".join(parts)
+        body = b''.join(parts)
         mimetype = f'multipart/related; boundary="{boundary}"'
 
         LOGGER.debug(f'returning: mimetype = {mimetype}')
@@ -487,32 +487,32 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
 
         # value is an object
         if isinstance(occurrence, dict):
-            if "value" in occurrence:
-                return occurrence["value"]
+            if 'value' in occurrence:
+                return occurrence['value']
 
-            elif "href" in occurrence:
+            elif 'href' in occurrence:
                 # opzionalmente puoi validare gli attributi ammessi
-                allowed_attrs = {"href", "rel", "type", "hreflang", "title"}
+                allowed_attrs = {'href', 'rel', 'type', 'hreflang', 'title'}
                 extra_keys = set(occurrence.keys()) - allowed_attrs
                 if extra_keys:
                     err_msg = (
-                        f"Invalid attributes for href object: {extra_keys}"
+                        f'Invalid attributes for href object: {extra_keys}'
                     )
                     raise GenericError(err_msg)
 
-                err_msg = "href handling not implemented"
+                err_msg = 'href handling not implemented'
                 raise GenericError(err_msg)
 
-            elif "bbox" in occurrence:
-                err_msg = "bbox handling not implemented"
+            elif 'bbox' in occurrence:
+                err_msg = 'bbox handling not implemented'
                 raise GenericError(err_msg)
 
-            elif "collection" in occurrence:
-                err_msg = "collection handling not implemented"
+            elif 'collection' in occurrence:
+                err_msg = 'collection handling not implemented'
                 raise GenericError(err_msg)
 
             else:
-                err_msg = f"Invalid object format"
+                err_msg = f'Invalid object format'
                 raise GenericError(err_msg)
 
         # value is not a dict
@@ -526,7 +526,7 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
         result = {}
         for key, occurrences in inputData.items():
             if key not in self.metadata['inputs']:
-                err_msg = (f"unexpected input parameter: {key}")
+                err_msg = (f'unexpected input parameter: {key}')
                 raise ProcessorExecuteError(err_msg)
             
             maxOccurs = self.metadata['inputs'][key].get('maxOccurs', 1)
@@ -535,13 +535,13 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
 
             if maxOccurs > 1:
                 if not isinstance(occurrences, list):
-                    err_msg = (f"Expected array for input parameter: {key} .")
+                    err_msg = (f'Expected array for input parameter: {key} .')
                     raise ProcessorExecuteError(err_msg)
                 n = len(occurrences)
                 if not (minOccurs <= n <= maxOccurs):
                     err_msg = (
-                        f"Invalid number of occurrences for input parameter '{key}': "
-                        f"expected between {minOccurs} and {maxOccurs}, got {n}."
+                        f'Invalid number of occurrences for input parameter "{key}": '
+                        f'expected between {minOccurs} and {maxOccurs}, got {n}.'
                     )
                     raise ProcessorExecuteError(err_msg)
 
@@ -552,7 +552,7 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
                         # TO DO: if resolve to a reference
                         # ################################
                     except GenericError as ex:
-                        err_msg = (f"On key {key}: {ex.message}")
+                        err_msg = (f'On key {key}: {ex.message}')
                         raise ProcessorExecuteError(err_msg)
                     
                     validation_errors = validate_json(schema, instance)
@@ -569,7 +569,7 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
                     # TO DO: if resolve to a reference
                     # ################################
                 except GenericError as ex:
-                    err_msg = (f"On key {key}: {ex.message}")
+                    err_msg = (f'On key {key}: {ex.message}')
                     raise ProcessorExecuteError(err_msg)
 
                 validation_errors = validate_json(schema, instance)
@@ -618,42 +618,42 @@ class BaseRemoteExecutionProcessorLocalReference(BaseRemoteExecutionProcessor):
 
         if 'reference' in self.metadata.get('outputTransmission', []):
             try:
-                path = Path(processor_def.get("base_reference_dir"))
+                path = Path(processor_def.get('base_reference_dir'))
                 self.base_reference_path = path.resolve(strict=True)
             except  (TypeError, FileNotFoundError, PermissionError):
                 if len(self.metadata.get('outputTransmission', [])) == 1:
                     raise ProcessorGenericError(
-                        "ERROR in configuration file: output allowed only by "
-                        "reference and undefined or not existing path for "
-                        f"\'base_reference_dir\' for processor {self.name}.")
+                        'ERROR in configuration file: output allowed only by '
+                        'reference and undefined or not existing path for '
+                        f'\'base_reference_dir\' for processor {self.name}.')
                 else:
-                    msg = (f"Processor {self.name} able to return output by "
-                        "reference, but in configuration file "
-                        "\'base_reference_dir\' undefined or path not existing."
-                        " Removing output transmition option \'by reference\'")
+                    msg = (f'Processor {self.name} able to return output by '
+                        'reference, but in configuration file '
+                        '\'base_reference_dir\' undefined or path not existing.'
+                        ' Removing output transmition option \'by reference\'')
                     LOGGER.error(msg)
                     self.metadata['outputTransmission'].remove('reference')
         if 'reference' in self.metadata.get('outputTransmission', []):
             try:
                 self.base_reference_url = processor_def.get('base_reference_url')
                 parsed = urlparse(self.base_reference_url)
-                if parsed.scheme not in ("http", "https") or not parsed.netloc:
+                if parsed.scheme not in ('http', 'https') or not parsed.netloc:
                     raise ProcessorGenericError(
-                        f"ERROR in configuration file: Invalid URL "
-                        f"'base_reference_url' for processor {self.name}.")
-                if not self.base_reference_url.endswith("/"):
-                    self.base_reference_url += "/"
+                        f'ERROR in configuration file: Invalid URL '
+                        f'\'base_reference_url\' for processor {self.name}.')
+                if not self.base_reference_url.endswith('/'):
+                    self.base_reference_url += '/'
             except  TypeError:
                 if len(self.metadata.get('outputTransmission', [])) == 1:
                     raise ProcessorGenericError(
-                        "ERROR in configuration file: output allowed only by "
-                        "reference and undefined "
-                        f"\'base_reference_url\' for processor {self.name}.")
+                        'ERROR in configuration file: output allowed only by '
+                        'reference and undefined '
+                        f'\'base_reference_url\' for processor {self.name}.')
                 else:
-                    msg = (f"Processor {self.name} able to return output by "
-                        "reference, but in configuration file "
-                        "\'base_reference_url\' undefined."
-                        " Removing output transmition option \'by reference\'")
+                    msg = (f'Processor {self.name} able to return output by '
+                        'reference, but in configuration file '
+                        '\'base_reference_url\' undefined.'
+                        ' Removing output transmition option \'by reference\'')
                     LOGGER.error(msg)
                     self.metadata['outputTransmission'].remove('reference')
 

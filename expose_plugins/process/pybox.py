@@ -49,107 +49,107 @@ from expose_plugins.process.base_remote_execution import (
 LOGGER = logging.getLogger(__name__)
 
 INPUT_SCHEMA = {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/schemas/pybox_plugin_schema.json",
-  "title": "PyBox Input Schema",
-  "description": "Schema for PyBox plugin inputs",
-  "type": "object",
-  "required": ["lat", "lon", "l0", "h0", "theta0", "multiple_values",
-               "dt", "margin"],
-  "additionalProperties": False,
-  "properties": {
-    "lat": {
-      "title": "Latitude",
-      "description": "Geographic latitude of the vent in Decimal degrees",
-      "type": "number",
-      "minimum": -90.0,
-      "maximum": 90.0
+  '$schema': 'https://json-schema.org/draft/2020-12/schema',
+  '$id': 'https://example.com/schemas/pybox_plugin_schema.json',
+  'title': 'PyBox Input Schema',
+  'description': 'Schema for PyBox plugin inputs',
+  'type': 'object',
+  'required': ['lat', 'lon', 'l0', 'h0', 'theta0', 'multiple_values',
+               'dt', 'margin'],
+  'additionalProperties': False,
+  'properties': {
+    'lat': {
+      'title': 'Latitude',
+      'description': 'Geographic latitude of the vent in Decimal degrees',
+      'type': 'number',
+      'minimum': -90.0,
+      'maximum': 90.0
     },
-    "lon": {
-      "title": "Longitude",
-      "description": "Geographic longitude of the vent in Decimal degrees",
-      "type": "number",
-      "minimum": -180.0,
-      "maximum": 180.0
+    'lon': {
+      'title': 'Longitude',
+      'description': 'Geographic longitude of the vent in Decimal degrees',
+      'type': 'number',
+      'minimum': -180.0,
+      'maximum': 180.0
     },
-    "l0": {
-      "title": "Initial Radius",
-      "description": "Initial horizontal extent (l0) of the current in meters",
-      "type": "number",
-      "minimum": 100.0,
-      "maximum": 2000.0
+    'l0': {
+      'title': 'Initial Radius',
+      'description': 'Initial horizontal extent (l0) of the current in meters',
+      'type': 'number',
+      'minimum': 100.0,
+      'maximum': 2000.0
     },
-    "h0": {
-      "title": "Initial height",
-      "description": "Initial vertical thickness (h0) of the current in meters",
-      "type": "number",
-      "minimum": 100.0,
-      "maximum": 2000.0
+    'h0': {
+      'title': 'Initial height',
+      'description': 'Initial vertical thickness (h0) of the current in meters',
+      'type': 'number',
+      'minimum': 100.0,
+      'maximum': 2000.0
     },
-    "theta0": {
-      "title": "Temperature",
-      "description": "Initial temperature of the current in Kelvin",
-      "type": "number",
-      "minimum": 300.0,
-      "maximum": 1400.0
+    'theta0': {
+      'title': 'Temperature',
+      'description': 'Initial temperature of the current in Kelvin',
+      'type': 'number',
+      'minimum': 300.0,
+      'maximum': 1400.0
     },
-    "multiple_values": {
-      "title": "Multiple particle classes",
-      "description": (
-        "When simulating multiple particle classes, the volume fraction "
-        "(eps0), density (rhos), and diameter (ds) of each class should be "
-        "specified and the sum of eps0 must be < 1"
+    'multiple_values': {
+      'title': 'Multiple particle classes',
+      'description': (
+        'When simulating multiple particle classes, the volume fraction '
+        '(eps0), density (rhos), and diameter (ds) of each class should be '
+        'specified and the sum of eps0 must be < 1'
       ),
-      "type": "array",
-      "minItems": 1,
-      "maxItems": 21,
-      "items": {
-        "type": "object",
-        "required": ["eps0", "rhos", "ds"],
-        "additionalProperties": False,
-        "properties": {
-          "eps0": {
-            "title": "Particle volume fraction",
-            "description": "Volume fraction of particle class",
-            "type": "number",
-            "minimum": 0.001,
-            "maximum": 0.1
+      'type': 'array',
+      'minItems': 1,
+      'maxItems': 21,
+      'items': {
+        'type': 'object',
+        'required': ['eps0', 'rhos', 'ds'],
+        'additionalProperties': False,
+        'properties': {
+          'eps0': {
+            'title': 'Particle volume fraction',
+            'description': 'Volume fraction of particle class',
+            'type': 'number',
+            'minimum': 0.001,
+            'maximum': 0.1
           },
-          "rhos": {
-            "title": "Particle density",
-            "description": "Density of particle class in kg/m3",
-            "type": "number",
-            "minimum": 500.0,
-            "maximum": 3500.0
+          'rhos': {
+            'title': 'Particle density',
+            'description': 'Density of particle class in kg/m3',
+            'type': 'number',
+            'minimum': 500.0,
+            'maximum': 3500.0
           },
-          "ds": {
-            "title": "Particle diameter",
-            "description":
-              "Diameter of particle class (10 micron-5 mm) in meters",
-            "type": "number",
-            "minimum": 0.00001,
-            "maximum": 0.005
+          'ds': {
+            'title': 'Particle diameter',
+            'description':
+              'Diameter of particle class (10 micron-5 mm) in meters',
+            'type': 'number',
+            'minimum': 0.00001,
+            'maximum': 0.005
           }
         }
       }
     },
-    "dt": {
-      "title": "Time step",
-      "description":
-        "Temporal resolution of the numerical integration in seconds",
-      "type": "number",
-      "minimum": 0.1,
-      "maximum": 30.0
+    'dt': {
+      'title': 'Time step',
+      'description':
+        'Temporal resolution of the numerical integration in seconds',
+      'type': 'number',
+      'minimum': 0.1,
+      'maximum': 30.0
     },
-    "margin": {
-      "title": "Margin",
-      "description": (
-          "-x, -y, x, y distance from the given vent location "
-          "(i.e. bounding box of the requested DSM) in meters"
+    'margin': {
+      'title': 'Margin',
+      'description': (
+          '-x, -y, x, y distance from the given vent location '
+          '(i.e. bounding box of the requested DSM) in meters'
       ),
-      "type": "number",
-      "minimum": 5000,
-      "maximum": 50000
+      'type': 'number',
+      'minimum': 5000,
+      'maximum': 50000
     }
   }
 }
@@ -211,16 +211,16 @@ PROCESS_METADATA = {
     'title': 'A fast, calibrated model for pyroclastic density currents kinematics and hazard'
     },
     {
-    "href": "https://doi.org/10.5281/zenodo.18920969",
-    "rel": "cite-as",
-    "type": "text/html",
-    "title": "PyBOX-Web release on Zenodo (DOI: 10.5281/zenodo.18920969)"
+    'href': 'https://doi.org/10.5281/zenodo.18920969',
+    'rel': 'cite-as',
+    'type': 'text/html',
+    'title': 'PyBOX-Web release on Zenodo (DOI: 10.5281/zenodo.18920969)'
     },
     {
-    "href": "https://github.com/silviagians/PyBOX-Web",
-    "rel": "source",
-    "type": "text/html",
-    "title": "PyBOX-Web source code repository on GitHub"
+    'href': 'https://github.com/silviagians/PyBOX-Web',
+    'rel': 'source',
+    'type': 'text/html',
+    'title': 'PyBOX-Web source code repository on GitHub'
     }
   ],
   # type: array, 
@@ -339,17 +339,55 @@ PROCESS_METADATA = {
       'title': 'Input parameters',
       'description': 'Log of all input parameters used',
       'schema': {
-          "type": "string",
-          "contentMediaType": "text/plain"
+          'type': 'string',
+          'contentMediaType': 'text/plain'
       }
     },
     'dem': {
       'title': 'Primary DEM',
       'description': 'The local DSM (GeoTIFF) used for the simulation.',
-      'schema': { # see standard doc, pag. 77, ref. "imagesOutput"
-        "type": "string",
-        "contentEncoding": "binary",
-        "contentMediaType": "application/tiff; application=geotiff"
+      'schema': {
+        'type': 'object',
+        'properties': {
+          'geotiff': {
+            'description': 'Reference to the GeoTIFF.',
+            'allOf': [
+              {
+                '$ref': 'link.yaml'
+              },
+              {
+                'type': 'object',
+                'required': ['type'],
+                'properties': {
+                  'type': {
+                    'enum': [
+                      'image/tiff; application=geotiff',
+                      'application/tiff; application=geotiff'
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          'sld': {
+            'description': 'Reference to the Styled Layer Descriptor (SLD) '
+                    'defining the visualization style for this GeoTIFF.',
+            'allOf': [
+              {
+                '$ref': 'link.yaml'
+              },
+              {
+                'type': 'object',
+                'required': ['type'],
+                'properties': {
+                  'type': {
+                    'const': 'application/vnd.ogc.sld+xml'
+                  }
+                }
+              }
+            ]
+          }
+        }
       }
     },
     'invasion_map': {
@@ -357,10 +395,48 @@ PROCESS_METADATA = {
       'description':
         '2D GeoTIFF showing PDC invaded area, '
         'based on the energy conoid method.',
-      'schema': { # see standard doc, pag. 77, ref. "imagesOutput"
-        "type": "string",
-        "contentEncoding": "binary",
-        "contentMediaType": "application/tiff; application=geotiff"
+      'schema': {
+        'type': 'object',
+        'properties': {
+          'geotiff': {
+            'description': 'Reference to the GeoTIFF.',
+            'allOf': [
+              {
+                '$ref': 'link.yaml'
+              },
+              {
+                'type': 'object',
+                'required': ['type'],
+                'properties': {
+                  'type': {
+                    'enum': [
+                      'image/tiff; application=geotiff',
+                      'application/tiff; application=geotiff'
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          'sld': {
+            'description': 'Reference to the Styled Layer Descriptor (SLD) '
+                    'defining the visualization style for this GeoTIFF.',
+            'allOf': [
+              {
+                '$ref': 'link.yaml'
+              },
+              {
+                'type': 'object',
+                'required': ['type'],
+                'properties': {
+                  'type': {
+                    'const': 'application/vnd.ogc.sld+xml'
+                  }
+                }
+              }
+            ]
+          }
+        }
       }
     },
     'spatial_evolution': {
@@ -402,38 +478,38 @@ PROCESS_METADATA = {
     },
     {
       'curl_request_example': 
-          "curl -k -L -X POST "
-          "\"https://voice.pi.ingv.it/geoinquire/processes/pybox/execution\" "
-          "-H \"Content-Type: application/json\" "
-          "-d '{\"inputs\":{\"lon\":14.428,\"lat\":40.820,\"l0\":150,\"h0\":150,"
-          "\"theta0\":500,\"multiple_values\":[{"
-          "\"eps0\":0.01,\"rhos\":1000,\"ds\":0.0001}],"
-          "\"dt\":0.5,\"margin\":5000},"
-          "\"outputs\":{\"dem\":{\"transmissionMode\": \"reference\"},"
-          "\"spatial_evolution\":{\"transmissionMode\": \"value\"}}}'"
+          'curl -k -L -X POST '
+          '"https://voice.pi.ingv.it/geoinquire/processes/pybox/execution" '
+          '-H "Content-Type: application/json" '
+          '-d \'{"inputs":{"lon":14.428,"lat":40.820,"l0":150,"h0":150,'
+          '"theta0":500,"multiple_values":[{'
+          '"eps0":0.01,"rhos":1000,"ds":0.0001}],'
+          '"dt":0.5,"margin":5000},'
+          '"outputs":{"dem":{"transmissionMode": "reference"},'
+          '"spatial_evolution":{"transmissionMode": "value"}}}\''
     },
     {
       'curl_request_with_qualified_example__href-only_not_supported_yet': 
-          "curl -k -L -X POST "
-          "\"https://voice.pi.ingv.it/geoinquire/processes/pybox/execution\" "
-          "-H \"Content-Type: application/json\" "
-          "-d '{\"inputs\":{\"lon\":{\"value\":14.428},"
-          "\"lat\":{\"value\":40.820},\"l0\":150,\"h0\":150,"
-          "\"theta0\":500,\"multiple_values\":[{"
-          "\"eps0\":0.01,\"rhos\":1000,\"ds\":0.0001}],"
-          "\"dt\":0.5,\"margin\":5000},"
-          "\"outputs\":{\"dem\":{\"transmissionMode\": \"reference\"},"
-          "\"spatial_evolution\":{\"transmissionMode\": \"value\"}}}'"
+          'curl -k -L -X POST '
+          '"https://voice.pi.ingv.it/geoinquire/processes/pybox/execution" '
+          '-H "Content-Type: application/json" '
+          '-d \'{"inputs":{"lon":{"value":14.428},'
+          '"lat":{"value":40.820},"l0":150,"h0":150,'
+          '"theta0":500,"multiple_values":[{'
+          '"eps0":0.01,"rhos":1000,"ds":0.0001}],'
+          '"dt":0.5,"margin":5000},'
+          '"outputs":{"dem":{"transmissionMode": "reference"},'
+          '"spatial_evolution":{"transmissionMode": "value"}}}\''
     },
     {
       'curl_jobStatus_request': 
-          "curl -k -L "
-          "\"https://voice.pi.ingv.it/jobs/<jobID>\""
+          'curl -k -L '
+          '"https://voice.pi.ingv.it/jobs/<jobID>"'
     },
     {
       'curl_jobResults_request': 
-          "curl -k -L "
-          "\"https://voice.pi.ingv.it/jobs/<jobID>/results\"?f=json"
+          'curl -k -L '
+          '"https://voice.pi.ingv.it/jobs/<jobID>/results"?f=json'
     }
   ]
   # curl -k -L -X POST "https://voice.pi.ingv.it/geoinquire/processes/pybox/execution" -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" : 14.428, "lat" : 40.820, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : ["input_data", "dem", "spatial_evolution"] }'
@@ -465,7 +541,7 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
         super().__init__(processor_def, PROCESS_METADATA)
         self.supports_outputs = True
 
-        self.base_output_filename = "out_file"
+        self.base_output_filename = 'out_file'
 
     def prepare_output(self, info, working_path: Path, req_outputs):
         # Checks for error on outputs request performed by
@@ -480,105 +556,173 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                 transmission_mode = req_outputs['input_data'].get(
                     'transmissionMode', ''
                 )
-                if transmission_mode == "value":
+                if transmission_mode == 'value':
                     with open(
                         working_path / 
-                        f"{self.base_output_filename}_params.txt"
+                        f'{self.base_output_filename}_params.txt'
                     ) as output_file:
                         contenuto = output_file.read()
                     produced_outputs['input_data']['value'] = contenuto
-                elif (transmission_mode == "reference"):
+                elif (transmission_mode == 'reference'):
                     src_file = (
                         working_path /
-                        f"{self.base_output_filename}_params.txt"
+                        f'{self.base_output_filename}_params.txt'
                     )
                     dst_file = (
                         self.base_reference_path /
-                        f"{self.job_id}_input_data.txt"
+                        f'{self.job_id}_input_data.txt'
                     )
                     shutil.copy(src_file, dst_file)
 
                     file_href = (
-                        f"{self.base_reference_url}"
-                        f"{self.job_id}_input_data.txt"
+                        f'{self.base_reference_url}'
+                        f'{self.job_id}_input_data.txt'
                     )
                     produced_outputs['input_data']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
-                    raise ProcessorExecuteError("Program error.")
+                    raise ProcessorExecuteError('Program error.')
  
             if 'dem' in req_outputs:
-                produced_outputs['dem'] = {
-                    'mediaType': 'application/tiff; application=geotiff'
+                # GeoTIFF file is always made available by reference
+                src_tiff_file = (
+                    working_path / 
+                    f'{self.base_output_filename}.tif'
+                )
+                dst_tiff_file = (
+                    self.base_reference_path /
+                    f'{self.job_id}_dem.tif'
+                )
+                shutil.copy(src_tiff_file, dst_tiff_file)
+                file_tiff_href = (
+                    f'{self.base_reference_url}'
+                    f'{self.job_id}_dem.tif'
+                )
+
+                # SLD file is always made available by reference
+                src_sld_file = (
+                    working_path / 
+                    f'{self.base_output_filename}.sld'
+                )
+                dst_sld_file = (
+                    self.base_reference_path /
+                    f'{self.job_id}_dem.sld'
+                )
+                shutil.copy(src_sld_file, dst_sld_file)
+                file_sld_href = (
+                    f'{self.base_reference_url}'
+                    f'{self.job_id}_dem.sld'
+                )
+
+                dem_metadata = PROCESS_METADATA['outputs']['dem']
+                dem_properties = dem_metadata['schema']['properties']
+                value = {
+                    'geotiff': {
+                        'title': dem_properties['geotiff']['description'],
+                        'type': 'application/tiff; application=geotiff',
+                        'href': file_tiff_href
+                    },
+                    'sld': {
+                        'title': dem_properties['sld']['description'],
+                        'type': 'application/vnd.ogc.sld+xml',
+                        'href': file_sld_href
+                    },
                 }
+
+                produced_outputs['dem'] = {
+                    'mediaType': 'application/json'
+                }
+
                 transmission_mode = req_outputs['dem'].get(
                     'transmissionMode', ''
                 )
-                if transmission_mode == "value":
-                    with open(
-                        working_path / f"{self.base_output_filename}.tif", "rb"
-                    ) as output_file:
-                        contenuto_bytes = output_file.read()
-                    # ref. standard, pag 63, "imagesOutput"
-                    # Return a "string" coded base64 (which is what is
-                    # expected for "binary"): ref. standard, pag. 45, Note 7
-                    produced_outputs['dem']['value'] = base64.b64encode(
-                        contenuto_bytes
-                    ).decode('utf-8')
-                    produced_outputs['dem']['encoding'] = 'base64'
-                elif (transmission_mode == "reference"):
-                    src_file = (
-                        working_path / 
-                        f"{self.base_output_filename}.tif"
-                    )
+                if transmission_mode == 'value':
+                    produced_outputs['dem']['value'] = value
+                elif (transmission_mode == 'reference'):
                     dst_file = (
                         self.base_reference_path /
-                        f"{self.job_id}_dem.tif"
+                        f'{self.job_id}_dem.json'
                     )
-                    shutil.copy(src_file, dst_file)
+                    with open(dst_file, 'w', encoding='utf-8') as json_file:
+                        json.dump(value, json_file)
 
                     file_href = (
-                        f"{self.base_reference_url}"
-                        f"{self.job_id}_dem.tif"
+                        f'{self.base_reference_url}'
+                        f'{self.job_id}_dem.json'
                     )
                     produced_outputs['dem']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
-                    raise ProcessorExecuteError("Program error.")
+                    raise ProcessorExecuteError('Program error.')
             
             if 'invasion_map' in req_outputs:
-                produced_outputs['invasion_map'] = {
-                    'mediaType': 'application/tiff; application=geotiff'
+                # GeoTIFF file is always made available by reference
+                src_tiff_file = (
+                    working_path / 
+                    f'{self.base_output_filename}_EC2.tif'
+                )
+                dst_tiff_file = (
+                    self.base_reference_path /
+                    f'{self.job_id}_invasion_map.tif'
+                )
+                shutil.copy(src_tiff_file, dst_tiff_file)
+                file_tiff_href = (
+                    f'{self.base_reference_url}'
+                    f'{self.job_id}_invasion_map.tif'
+                )
+
+                # SLD file is always made available by reference
+                src_sld_file = (
+                    working_path / 
+                    f'{self.base_output_filename}_EC2.sld'
+                )
+                dst_sld_file = (
+                    self.base_reference_path /
+                    f'{self.job_id}_invasion_map.sld'
+                )
+                shutil.copy(src_sld_file, dst_sld_file)
+                file_sld_href = (
+                    f'{self.base_reference_url}'
+                    f'{self.job_id}_invasion_map.sld'
+                )
+
+                invasion_metadata = PROCESS_METADATA['outputs']['invasion_map']
+                invasion_properties = invasion_metadata['schema']['properties']
+                value = {
+                    'geotiff': {
+                        'title': invasion_properties['geotiff']['description'],
+                        'type': 'application/tiff; application=geotiff',
+                        'href': file_tiff_href
+                    },
+                    'sld': {
+                        'title': invasion_properties['sld']['description'],
+                        'type': 'application/vnd.ogc.sld+xml',
+                        'href': file_sld_href
+                    },
                 }
+
+                produced_outputs['invasion_map'] = {
+                    'mediaType': 'application/json'
+                }
+
                 transmission_mode = req_outputs['invasion_map'].get(
                     'transmissionMode', ''
                 )
-                if transmission_mode == "value":
-                    with open(
-                        working_path / 
-                        f"{self.base_output_filename}_EC2.tif", "rb"
-                    ) as output_file:
-                        contenuto_bytes = output_file.read()
-                    produced_outputs['invasion_map']['value'] = (
-                        base64.b64encode(contenuto_bytes).decode('utf-8')
-                    )
-                    produced_outputs['invasion_map']['encoding'] = 'base64'
-                elif (transmission_mode == "reference"):
-                    src_file = (
-                        working_path /
-                        f"{self.base_output_filename}_EC2.tif"
-                    )
+                if transmission_mode == 'value':
+                    produced_outputs['invasion_map']['value'] = value
+                elif (transmission_mode == 'reference'):
                     dst_file = (
                         self.base_reference_path /
-                        f"{self.job_id}_invasion_map.tif"
+                        f'{self.job_id}_invasion_map.json'
                     )
-                    shutil.copy(src_file, dst_file)
+                    with open(dst_file, 'w', encoding='utf-8') as json_file:
+                        json.dump(value, json_file)
 
                     file_href = (
-                        f"{self.base_reference_url}"
-                        f"{self.job_id}_invasion_map.tif"
+                        f'{self.base_reference_url}'
+                        f'{self.job_id}_invasion_map.json'
                     )
                     produced_outputs['invasion_map']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
-                    raise ProcessorExecuteError("Program error.")
+                    raise ProcessorExecuteError('Program error.')
             
             if 'spatial_evolution' in req_outputs:
                 x_length = []
@@ -592,7 +736,7 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                 y_eps_n = [] # variable number of columns (eps_0, eps_1, ...)
 
                 with open(
-                    working_path / f"{self.base_output_filename}.csv"
+                    working_path / f'{self.base_output_filename}.csv'
                 ) as output_file:
                     for line in output_file:
                         # Skip spaces
@@ -715,26 +859,28 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                 produced_outputs['spatial_evolution'] = {
                     'mediaType': 'application/json'
                 }
+                
                 transmission_mode = req_outputs['spatial_evolution'].get(
                     'transmissionMode', ''
                 )
-                if transmission_mode == "value":
+                if transmission_mode == 'value':
                     produced_outputs['spatial_evolution']['value'] =  value
-                elif (transmission_mode == "reference"):
-                    dst_file = Path(self.base_reference_path) / (
-                        f"{self.job_id}_spatial_evolution.json"
+                elif (transmission_mode == 'reference'):
+                    dst_file = (
+                        self.base_reference_path /
+                        f'{self.job_id}_spatial_evolution.json'
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
                         json.dump(value, json_file)
 
                     file_href = (
-                        f"{self.base_reference_url}"
-                        f"{self.job_id}_spatial_evolution.json"
+                        f'{self.base_reference_url}'
+                        f'{self.job_id}_spatial_evolution.json'
                     )
                     produced_outputs['spatial_evolution']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
-                    raise ProcessorExecuteError("Program error.")
+                    raise ProcessorExecuteError('Program error.')
 
             if 'deposit_thickness' in req_outputs:
                 x_position = []
@@ -743,7 +889,7 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                 y_thikness_n = [] 
     
                 with open(
-                    working_path / f"{self.base_output_filename}_thickness.csv"
+                    working_path / f'{self.base_output_filename}_thickness.csv'
                 ) as output_file:
                     for line in output_file:
                         # Skip spaces
@@ -820,29 +966,30 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                 transmission_mode = req_outputs['deposit_thickness'].get(
                     'transmissionMode', ''
                 )
-                if transmission_mode == "value":
+                if transmission_mode == 'value':
                     produced_outputs['deposit_thickness']['value'] =  value
-                elif (transmission_mode == "reference"):
-                    dst_file = Path(self.base_reference_path) / (
-                        f"{self.job_id}_deposit_thickness.json"
+                elif (transmission_mode == 'reference'):
+                    dst_file = (
+                        self.base_reference_path /
+                        f'{self.job_id}_deposit_thickness.json'
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
                         json.dump(value, json_file)
 
                     file_href = (
-                        f"{self.base_reference_url}"
-                        f"{self.job_id}_deposit_thickness.json"
+                        f'{self.base_reference_url}'
+                        f'{self.job_id}_deposit_thickness.json'
                     )
                     produced_outputs['deposit_thickness']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
-                    raise ProcessorExecuteError("Program error.")
+                    raise ProcessorExecuteError('Program error.')
 
         except OSError as e:
-            LOGGER.error(f"Errore apertura file: {e}")
+            LOGGER.error(f'Errore apertura file: {e}')
             raise ProcessorExecuteError(
-                f"Program error: please report to the service provider "
-                "for this job_id: {info['job_id']}."
+                f'Program error: please report to the service provider '
+                f'for this job_id: {info["job_id"]}.'
             )
 
         return self.format_output(produced_outputs, req_outputs)
@@ -875,7 +1022,7 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
             valori_ds.append(multiple_value['ds'])
 
         if sum(valori_eps0) >= 1:
-            err_msg = f"In multiple_values, the sum of eps0 must be < 1"
+            err_msg = f'In multiple_values, the sum of eps0 must be < 1'
             raise ProcessorExecuteError(err_msg)
 
         # Create the dictionary with the properties to be passed to the 'code'

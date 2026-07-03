@@ -44,18 +44,18 @@ from expose_plugins.process.base_remote_execution import (
 LOGGER = logging.getLogger(__name__)
 
 INPUT_SCHEMA = {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/schemas/solwcad_plugin_schema.json",
-  "title": "Conduit Input Schema",
-  "description": "Schema for Conduit plugin inputs",
-  "type": "object",
-  "required": ["swinput.data", "sw.data"],
-  "additionalProperties": False,
-  "properties": {
-    "swinput.data": {
+  '$schema': 'https://json-schema.org/draft/2020-12/schema',
+  '$id': 'https://example.com/schemas/solwcad_plugin_schema.json',
+  'title': 'Conduit Input Schema',
+  'description': 'Schema for Conduit plugin inputs',
+  'type': 'object',
+  'required': ['swinput.data', 'sw.data'],
+  'additionalProperties': False,
+  'properties': {
+    'swinput.data': {
       'title': 'Desired computation',
       'description': 'Specifics for the desired computation.',
-      "type": "object",
+      'type': 'object',
       'oneOf': [
         {
           'title': '[placeholder per titolo 1]',
@@ -76,7 +76,7 @@ INPUT_SCHEMA = {
             'ndat2',
             'kl'
           ],
-          "additionalProperties": False,
+          'additionalProperties': False,
           'properties': {
             'ndat1': {
               'type': 'integer',
@@ -132,8 +132,8 @@ INPUT_SCHEMA = {
             'fopen': {
               'type': 'string',
               'pattern':
-                r"^([+-]?([\d]+\.|[\d]*\.[\d]+))"
-                r"([Dd][+-]?[\d]+)?$",
+                r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
+                r'([Dd][+-]?[\d]+)?$',
               'description':
                 'Only used with iopen =1. It specifies '
                 'the weight fraction of fluid phase lost '
@@ -179,8 +179,8 @@ INPUT_SCHEMA = {
             'fopen': {
               'type': 'string',
               'pattern':
-                r"^([+-]?([\d]+\.|[\d]*\.[\d]+))"
-                r"([Dd][+-]?[\d]+)?$",
+                r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
+                r'([Dd][+-]?[\d]+)?$',
               'description':
                 'Only used with iopen =1. It specifies '
                 'the weight fraction of fluid phase lost '
@@ -189,8 +189,8 @@ INPUT_SCHEMA = {
             'dt': {
               'type': 'string',
               'pattern':
-                r"^([+-]?([\d]+\.|[\d]*\.[\d]+))"
-                r"([Dd][+-]?[\d]+)?$",
+                r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
+                r'([Dd][+-]?[\d]+)?$',
               'description':
                 'The length of the T-steps (either '
                 'positive or negative).'
@@ -198,8 +198,8 @@ INPUT_SCHEMA = {
             'tlimit': {
               'type': 'string',
               'pattern':
-                r"^([+-]?([\d]+\.|[\d]*\.[\d]+))"
-                r"([Dd][+-]?[\d]+)?$",
+                r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
+                r'([Dd][+-]?[\d]+)?$',
               'description':
                 'The temperature up to which separate '
                 'computations are performed. It can be '
@@ -248,7 +248,7 @@ INPUT_SCHEMA = {
         }
       ]
     },
-    "sw.data": {
+    'sw.data': {
       'title': 'User data',
       'description':
         'user-defined conditions in terms of pressure, temperature, '
@@ -276,8 +276,8 @@ INPUT_SCHEMA = {
         'items': {
           'type': 'string',
           'pattern':
-            r"^([+-]?([\d]+\.|[\d]*\.[\d]+))"
-            r"([Dd][+-]?[\d]+)?$",
+            r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
+            r'([Dd][+-]?[\d]+)?$',
         }
       }
     }
@@ -416,8 +416,8 @@ PROCESS_METADATA = {
               'items': {
                 'type': 'string',
                 'pattern':
-                  r"^([+-]?(?:[[:digit:]]+\.|[[:digit:]]*\."
-                  r"[[:digit:]]+))(?:[Dd][+-]?[[:digit:]]+)?$",
+                  r'^([+-]?(?:[[:digit:]]+\.|[[:digit:]]*\.'
+                  r'[[:digit:]]+))(?:[Dd][+-]?[[:digit:]]+)?$',
               }
             },
             'contentMediaType': 'application/json'
@@ -433,8 +433,8 @@ PROCESS_METADATA = {
               'items': {
                 'type': 'string',
                 'pattern':
-                  r"^([+-]?(?:[[:digit:]]+\.|[[:digit:]]*\."
-                  r"[[:digit:]]+))(?:[Dd][+-]?[[:digit:]]+)?$",
+                  r'^([+-]?(?:[[:digit:]]+\.|[[:digit:]]*\.'
+                  r'[[:digit:]]+))(?:[Dd][+-]?[[:digit:]]+)?$',
               }
             },
             'contentMediaType': 'text/plain'
@@ -474,30 +474,30 @@ PROCESS_METADATA = {
     },
     {
         'curl_example': (
-            "curl -i -k -L -X POST "
-            "\"https://voice.pi.ingv.it/geoinquire/processes/solwcad/execution\" "
-            "-H \"Content-Type: application/json\" "
-            "-d '{ \"inputs\":{\"swinput.data\":{\"value\":{"
-            "\"ndat1\":1,\"ndat2\":2,\"kl\":0}},"
-            "\"sw.data\":["
-            "[\"1.00d8\",\"1273.\",\".0400\",\".0200\",\".7653\","
-            "\".0032\",\".1201\",\".0027\",\".0246\",\".0006\",\".0018\","
-            "\".0132\",\".0378\",\".0306\"],"
-            "[\"2.00d8\",\"1173.\",\".0200\",\".0010\","
-            "\".7053\",\".0032\",\".1301\",\".0027\",\".0146\",\".0006\","
-            "\".0118\",\".0232\",\".0378\",\".0306\"]]}, "
-            "\"outputs\":{\"solwcad_out\":{\"format\":{\"mediaType\":\"text/plain\"}}}}'"
+            'curl -i -k -L -X POST '
+            '"https://voice.pi.ingv.it/geoinquire/processes/solwcad/execution" '
+            '-H "Content-Type: application/json" '
+            '-d \'{ "inputs":{"swinput.data":{"value":{'
+            '"ndat1":1,"ndat2":2,"kl":0}},'
+            '"sw.data":['
+            '["1.00d8","1273.",".0400",".0200",".7653",'
+            '".0032",".1201",\.0027\,\.0246\,\.0006\,\.0018\,'
+            '".0132",".0378",".0306"],'
+            '["2.00d8","1173.",".0200",".0010",'
+            '".7053",".0032",".1301",".0027",".0146",".0006",'
+            '".0118",".0232",".0378",".0306"]]}, '
+            '"outputs":{"solwcad_out":{"format":{"mediaType":"text/plain"}}}}\''
         )
     },
     {
       'curl_jobStatus_request': 
-          "curl -k -L "
-          "\"https://voice.pi.ingv.it/jobs/<jobID>\""
+          'curl -k -L '
+          '"https://voice.pi.ingv.it/jobs/<jobID>"'
     },
     {
       'curl_jobResults_request': 
-          "curl -k -L "
-          "\"https://voice.pi.ingv.it/jobs/<jobID>/results\"?f=json"
+          'curl -k -L '
+          '"https://voice.pi.ingv.it/jobs/<jobID>/results?f=json"'
     }
   ]
 
@@ -538,69 +538,69 @@ class SolwcadProcessor(BaseRemoteExecutionProcessorLocalReference):
                 fields = line_items.split()
                 if len(fields) != 15:
                     raise ProcessorExecuteError(
-                        "Program error: report to the administrator"
+                        'Program error: report to the administrator'
                     )
                 solwcad_out.append(fields)
 
         produced_outputs = {}
         try:
             if 'solwcad_out' in req_outputs:
-                format = req_outputs.get("solwcad_out").get("format")
+                format = req_outputs.get('solwcad_out').get('format')
                 if format is None:
                     # set to default
                     # (TODO: get first contentMediaType for the output_ID)
                     mediaType = 'application/json'
                 elif not isinstance(format, dict):
                     raise ProcessorExecuteError(
-                        "Invalid output parameter: format is not a dictionary."
+                        'Invalid output parameter: format is not a dictionary.'
                     )
                 else:
-                    mediaType = format.get("mediaType", 'application/json')
+                    mediaType = format.get('mediaType', 'application/json')
 
                 # (TODO: get accepted mediaType from contentMediaType)
-                if mediaType not in ["application/json", "text/plain"]:
+                if mediaType not in ['application/json', 'text/plain']:
                     # set to default
                     # (TODO: get first contentMediaType for the output_ID)
                     mediaType = 'application/json'
 
                 produced_outputs['solwcad_out'] = {'mediaType': mediaType}
 
-                if mediaType == "application/json":
+                if mediaType == 'application/json':
                     value = solwcad_out
-                elif mediaType == "text/plain":
-                    value = "\n".join(", ".join(row) for row in solwcad_out)
+                elif mediaType == 'text/plain':
+                    value = '\n'.join(', '.join(row) for row in solwcad_out)
                 else: # should never happen:
-                    raise ProcessorExecuteError("Program error.")
+                    raise ProcessorExecuteError('Program error.')
                 
                 transmission_mode = req_outputs['solwcad_out'].get(
                     'transmissionMode', ''
                 )
-                if transmission_mode == "value":
+                if transmission_mode == 'value':
                     produced_outputs['solwcad_out']['value'] =  value
-                elif (transmission_mode == "reference"):
-                    if mediaType == "application/json":
-                        filename = f"{self.job_id}_solwcad_out.json"
+                elif (transmission_mode == 'reference'):
+                    if mediaType == 'application/json':
+                        filename = f'{self.job_id}_solwcad_out.json'
                         dst_file = Path(self.base_reference_path) / filename
                         with open(dst_file, 'w', encoding='utf-8') as out_file:
                             json.dump(value, out_file)
-                    elif mediaType == "text/plain":
-                        filename = f"{self.job_id}_solwcad_out.txt"
+                    elif mediaType == 'text/plain':
+                        filename = f'{self.job_id}_solwcad_out.txt'
                         dst_file = Path(self.base_reference_path) / filename
                         with open(dst_file, 'w', encoding='utf-8') as out_file:
                             out_file.write(value)
                     else: # should never happen:
-                        raise ProcessorExecuteError("Program error.")
+                        raise ProcessorExecuteError('Program error.')
                     
-                    file_href = f"{self.base_reference_url}/{filename}"
+                    file_href = f'{self.base_reference_url}/{filename}'
                     produced_outputs['solwcad_out']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
-                    raise ProcessorExecuteError("Program error.")
+                    raise ProcessorExecuteError('Program error.')
 
         except OSError as e:
-            LOGGER.error(f"Errore apertura file: {e}")
+            LOGGER.error(f'Errore apertura file: {e}')
             raise ProcessorExecuteError(
-                f"Program error: please report to the service provider "
-                "for this job_id: {info['job_id']}."
+                f'Program error: please report to the service provider '
+                f'for this job_id: {info["job_id"]}.'
             )
                 
         return self.format_output(produced_outputs, req_outputs)
@@ -624,24 +624,24 @@ class SolwcadProcessor(BaseRemoteExecutionProcessorLocalReference):
                 int(ndat1)
                 int(ndat2)
                 swinput['iopen'] = 0
-                swinput['fopen'] = swinput['dt'] = swinput['tlimit'] = "0.0"
+                swinput['fopen'] = swinput['dt'] = swinput['tlimit'] = '0.0'
             case 1:
                 swinput['iopen'] = iopen = int(iopen)
                 swinput['fopen'] = fopen = str(fopen)
                 if (iopen == 1):
                     pass
                 else:
-                    swinput['fopen'] = "0.0"
+                    swinput['fopen'] = '0.0'
 
                 swinput['ndat2'] = 0
-                swinput['dt'] = swinput['tlimit'] = "0.0"
+                swinput['dt'] = swinput['tlimit'] = '0.0'
             case 2:
                 swinput['iopen'] = iopen = int(iopen)
                 swinput['fopen'] = fopen = str(fopen)
                 if (iopen == 1):
                     pass
                 else:
-                    swinput['fopen'] = "0.0"
+                    swinput['fopen'] = '0.0'
 
                 swinput['dt'] = dt = str(dt)
                 swinput['tlimit'] = tlimit = str(tlimit)
@@ -649,7 +649,7 @@ class SolwcadProcessor(BaseRemoteExecutionProcessorLocalReference):
 
         # Create input file(s) required to run the 'code'
         # ###############################################
-        swinput_filename = "swinput.data"
+        swinput_filename = 'swinput.data'
         # The file must not exist, otherwise there is a problem!
         with open(working_path / swinput_filename,
                   mode='x+t') as swinput_file:
@@ -661,7 +661,7 @@ class SolwcadProcessor(BaseRemoteExecutionProcessorLocalReference):
             swinput_file.write(str(swinput['dt']) + '\t')
             swinput_file.write(str(swinput['tlimit']) + '\n')
 
-        sw_filename = "sw.data"
+        sw_filename = 'sw.data'
         # The file must not exist, otherwise there is a problem!
         with open(working_path / sw_filename, mode='x+t') as sw_file:
             for line in sw:
@@ -675,7 +675,7 @@ class SolwcadProcessor(BaseRemoteExecutionProcessorLocalReference):
         code_input_param = {}
         code_input_param['-swinput'] = swinput_filename
         code_input_param['-sw'] = sw_filename
-        code_input_param['-output'] = "output.txt"
+        code_input_param['-output'] = 'output.txt'
 
         return code_input_param
 

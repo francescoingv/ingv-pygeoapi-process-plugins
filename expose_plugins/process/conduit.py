@@ -47,245 +47,247 @@ from expose_plugins.process.base_remote_execution import (
 LOGGER = logging.getLogger(__name__)
 
 INPUT_SCHEMA = {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/schemas/conduit_plugin_schema.json",
-  "title": "Conduit Input Schema",
-  "description": "Schema for Conduit plugin inputs",
-  "type": "object",
-  "required": ["melt_composition", "volatiles", "crystals", "fragmentation", "pressure_temperature", "geometry", "searching_mode"],
+  '$schema': 'https://json-schema.org/draft/2020-12/schema',
+  '$id': 'https://example.com/schemas/conduit_plugin_schema.json',
+  'title': 'Conduit Input Schema',
+  'description': 'Schema for Conduit plugin inputs',
+  'type': 'object',
+  'required': ['melt_composition', 'volatiles', 'crystals', 'fragmentation',
+               'pressure_temperature', 'geometry', 'searching_mode'],
 
-  "additionalProperties": False,
+  'additionalProperties': False,
   
-  "properties": {
-    "melt_composition": {
-      "title": "Melt composition",
-      "description": "Melt oxides",
-      "type": "object",
-      'required': ['sio2', 'tio2', 'al2o3', 'fe2o3', 'feo', 'mno', 'mgo', 'cao', 'na2o', 'k2o'],
-      "properties": {
-        "sio2": {
-          "type": "number",
-          "title": "SiO2",
-          "description": "Weight fraction of SiO2.",
-          "exclusiveMinimum": 0.0,
-          "exclusiveMaximum": 1.0
+  'properties': {
+    'melt_composition': {
+      'title': 'Melt composition',
+      'description': 'Melt oxides',
+      'type': 'object',
+      'required': ['sio2', 'tio2', 'al2o3', 'fe2o3', 'feo',
+                   'mno', 'mgo', 'cao', 'na2o', 'k2o'],
+      'properties': {
+        'sio2': {
+          'type': 'number',
+          'title': 'SiO2',
+          'description': 'Weight fraction of SiO2.',
+          'exclusiveMinimum': 0.0,
+          'exclusiveMaximum': 1.0
         },
-        "tio2": {
-          "type": "number",
-          "title": "TiO2",
-          "description": "Weight fraction of TiO2",
-          "exclusiveMinimum": 0.0,
-          "exclusiveMaximum": 1.0
+        'tio2': {
+          'type': 'number',
+          'title': 'TiO2',
+          'description': 'Weight fraction of TiO2',
+          'exclusiveMinimum': 0.0,
+          'exclusiveMaximum': 1.0
         },
-        "al2o3": {
-          "type": "number",
-          "title": "Al2O3",
-          "description": "Weight fraction of Al2O3",
-          "exclusiveMinimum": 0.0,
-          "exclusiveMaximum": 1.0
+        'al2o3': {
+          'type': 'number',
+          'title': 'Al2O3',
+          'description': 'Weight fraction of Al2O3',
+          'exclusiveMinimum': 0.0,
+          'exclusiveMaximum': 1.0
         },
-        "fe2o3": {
-          "type": "number",
-          "title": "Fe2O3",
-          "description": "Weight fraction of Fe2O3",
-          "exclusiveMinimum": 0.0,
-          "exclusiveMaximum": 1.0
+        'fe2o3': {
+          'type': 'number',
+          'title': 'Fe2O3',
+          'description': 'Weight fraction of Fe2O3',
+          'exclusiveMinimum': 0.0,
+          'exclusiveMaximum': 1.0
         },
-        "feo": {
-          "type": "number",
-          "title": "FeO",
-          "description": "Weight fraction of FeO",
-          "exclusiveMinimum": 0.0,
-          "exclusiveMaximum": 1.0
+        'feo': {
+          'type': 'number',
+          'title': 'FeO',
+          'description': 'Weight fraction of FeO',
+          'exclusiveMinimum': 0.0,
+          'exclusiveMaximum': 1.0
         },
-        "mno": {
-          "type": "number",
-          "title": "MnO",
-          "description": "Weight fraction of MnO",
-          "exclusiveMinimum": 0.0,
-          "exclusiveMaximum": 1.0
+        'mno': {
+          'type': 'number',
+          'title': 'MnO',
+          'description': 'Weight fraction of MnO',
+          'exclusiveMinimum': 0.0,
+          'exclusiveMaximum': 1.0
         },
-        "mgo": {
-          "type": "number",
-          "title": "MgO",
-          "description": "Weight fraction of MgO",
-          "exclusiveMinimum": 0.0,
-          "exclusiveMaximum": 1.0
+        'mgo': {
+          'type': 'number',
+          'title': 'MgO',
+          'description': 'Weight fraction of MgO',
+          'exclusiveMinimum': 0.0,
+          'exclusiveMaximum': 1.0
         },
-        "cao": {
-          "type": "number",
-          "title": "CaO",
-          "description": "Weight fraction of CaO",
-          "exclusiveMinimum": 0.0,
-          "exclusiveMaximum": 1.0
+        'cao': {
+          'type': 'number',
+          'title': 'CaO',
+          'description': 'Weight fraction of CaO',
+          'exclusiveMinimum': 0.0,
+          'exclusiveMaximum': 1.0
         },
-        "na2o": {
-          "type": "number",
-          "title": "Na2O",
-          "description": "Weight fraction of Na2O",
-          "exclusiveMinimum": 0.0,
-          "exclusiveMaximum": 1.0
+        'na2o': {
+          'type': 'number',
+          'title': 'Na2O',
+          'description': 'Weight fraction of Na2O',
+          'exclusiveMinimum': 0.0,
+          'exclusiveMaximum': 1.0
         },
-        "k2o": {
-          "type": "number",
-          "title": "K2O",
-          "description": "Weight fraction of K2O",
-          "exclusiveMinimum": 0.0,
-          "exclusiveMaximum": 1.0
+        'k2o': {
+          'type': 'number',
+          'title': 'K2O',
+          'description': 'Weight fraction of K2O',
+          'exclusiveMinimum': 0.0,
+          'exclusiveMaximum': 1.0
         },
       }
     },
-    "volatiles": {
-      "title": "Volatile composition",
-      "description": "Volatile oxides",
-      "type": "object",
+    'volatiles': {
+      'title': 'Volatile composition',
+      'description': 'Volatile oxides',
+      'type': 'object',
       'required': ['h2o', 'co2'],
-      "properties": {
-        "h2o": {
-          "type": "number",
-          "title": "H2O",
-          "description": "Weight fraction of total H2O",
-          "exclusiveMinimum": 0.0,
-          "exclusiveMaximum": 1.0
+      'properties': {
+        'h2o': {
+          'type': 'number',
+          'title': 'H2O',
+          'description': 'Weight fraction of total H2O',
+          'exclusiveMinimum': 0.0,
+          'exclusiveMaximum': 1.0
         },
-        "co2": {
-          "type": "number",
-          "title": "CO2",
-          "description": "Weight fraction of total CO2",
-          "exclusiveMinimum": 0.0,
-          "exclusiveMaximum": 1.0
+        'co2': {
+          'type': 'number',
+          'title': 'CO2',
+          'description': 'Weight fraction of total CO2',
+          'exclusiveMinimum': 0.0,
+          'exclusiveMaximum': 1.0
         },
       }
     },
-    "crystals": {
-      "title": "Crystals",
-      "description": "Crystals",
-      "type": "object",
+    'crystals': {
+      'title': 'Crystals',
+      'description': 'Crystals',
+      'type': 'object',
       'required': ['c', 'den'],
-      "properties": {
-        "c": {
-          "type": "number",
-          "title": "Crystal volume fraction",
-          "description":
-            "Volume fraction of crystals relative to a degassed magma.",
-          "exclusiveMinimum": 0.0,
-          "maximum": 0.7
+      'properties': {
+        'c': {
+          'type': 'number',
+          'title': 'Crystal volume fraction',
+          'description':
+            'Volume fraction of crystals relative to a degassed magma.',
+          'exclusiveMinimum': 0.0,
+          'maximum': 0.7
         },
-        "den": {
-          "type": "number",
-          "title": "Crystal density [kg/m^3]",
-          "description": "Average density of the crystal phase.",
-          "exclusiveMinimum": 0.0,
+        'den': {
+          'type': 'number',
+          'title': 'Crystal density [kg/m^3]',
+          'description': 'Average density of the crystal phase.',
+          'exclusiveMinimum': 0.0,
         }
       }
     },
-    "fragmentation": {
-      "title": "Fragmentation",
-      "description": "Fragmentation parameters",
-      "type": "object",
+    'fragmentation': {
+      'title': 'Fragmentation',
+      'description': 'Fragmentation parameters',
+      'type': 'object',
       'required': ['fe', 'pd', 'dp', 'ds', 'dc'],
-      "properties": {
-        "fe": {
-          "type": "number",
-          "title": "Fragmentation efficiency",
-          "description": "Parameter for fragmentation efficiency",
-          "minimum": 0.2,
-          "maximum": 1.0
+      'properties': {
+        'fe': {
+          'type': 'number',
+          'title': 'Fragmentation efficiency',
+          'description': 'Parameter for fragmentation efficiency',
+          'minimum': 0.2,
+          'maximum': 1.0
         },
-        "pd": {
-          "type": "number",
-          "title": "Pumice degassing",
-          "description": "Parameter for pumice degassing",
-          "minimum": 0.0,
-          "maximum": 1.0
+        'pd': {
+          'type': 'number',
+          'title': 'Pumice degassing',
+          'description': 'Parameter for pumice degassing',
+          'minimum': 0.0,
+          'maximum': 1.0
         },
-        "dp": {
-          "type": "number",
-          "title": "Diameter of the pumices [m]",
-          "description": "Average diameter of the pumices at fragmentation",
-          "exclusiveMinimum": 0.0,
+        'dp': {
+          'type': 'number',
+          'title': 'Diameter of the pumices [m]',
+          'description': 'Average diameter of the pumices at fragmentation',
+          'exclusiveMinimum': 0.0,
         },
-        "ds": {
-          "type": "number",
-          "title": "Diameter of the shards [m]",
-          "description": "Average diameter of the shards at fragmentation",
-          "exclusiveMinimum": 0.0,
+        'ds': {
+          'type': 'number',
+          'title': 'Diameter of the shards [m]',
+          'description': 'Average diameter of the shards at fragmentation',
+          'exclusiveMinimum': 0.0,
         },
-        "dc": {
-          "type": "number",
-          "title": "Diameter of the crystals [m]",
-          "description":
-            "Average diameter of the crystals at fragmentation",
-          "exclusiveMinimum": 0.0,
+        'dc': {
+          'type': 'number',
+          'title': 'Diameter of the crystals [m]',
+          'description':
+            'Average diameter of the crystals at fragmentation',
+          'exclusiveMinimum': 0.0,
         },
       }
     },
-    "pressure_temperature": {
-      "title": "Pressure and temperature",
-      "description": "Pressure and temperature",
-      "type": "object",
+    'pressure_temperature': {
+      'title': 'Pressure and temperature',
+      'description': 'Pressure and temperature',
+      'type': 'object',
       'required': ['p', 't'],
-      "properties": {
-        "p": {
-          "type": "number",
-          "title": "Pressure [Pa]",
-          "description": "Pressure in the magma chamber.",
-          "exclusiveMinimum": 101325.0
+      'properties': {
+        'p': {
+          'type': 'number',
+          'title': 'Pressure [Pa]',
+          'description': 'Pressure in the magma chamber.',
+          'exclusiveMinimum': 101325.0
         },
-        "t": {
-          "type": "number",
-          "title": "Temperature [K]",
-          "description": "Magma temperature",
-          "exclusiveMinimum": 273.15
+        't': {
+          'type': 'number',
+          'title': 'Temperature [K]',
+          'description': 'Magma temperature',
+          'exclusiveMinimum': 273.15
         },
       }
     },
-    "geometry": {
-      "title": "Geometry",
-      "description": "Geometry of the conduit",
-      "type": "object",
+    'geometry': {
+      'title': 'Geometry',
+      'description': 'Geometry of the conduit',
+      'type': 'object',
       'required': ['g', 'l'],
-      "properties": {
-        "g": {
-          "type": "string",
-          "title": "Geometry",
-          "description": "Geometry: cylindrical conduit ('conduit'), "
-            "planar fissure ('fissure')",
-          "enum": ["conduit", "fissure"]
+      'properties': {
+        'g': {
+          'type': 'string',
+          'title': 'Geometry',
+          'description': 'Geometry: cylindrical conduit (\'conduit\'), '
+            'planar fissure (\'fissure\')',
+          'enum': ['conduit', 'fissure']
         },
-        "l": {
-          "type": "number",
-          "title": "Conduit length [m]",
-          "description": "Length of the cylindrical conduit",
-          "exclusiveMinimum": 0.0
+        'l': {
+          'type': 'number',
+          'title': 'Conduit length [m]',
+          'description': 'Length of the cylindrical conduit',
+          'exclusiveMinimum': 0.0
         },
       }
     },
-    "searching_mode": {
+    'searching_mode': {
       'title': 'Searching mode',
       'description': 'Searching for mass flow rate or diameter',
-      "type": "object",
+      'type': 'object',
       'oneOf': [
         {
           'title': '[placeholder per titolo 1]',
           'description': '[placeholder per description 1]',
           'required': ['d'],
-          "additionalProperties": False,
+          'additionalProperties': False,
           'properties': {
-            "d": {
-              "type": "number",
-              "title": "Conduit diameter [m]",
-              "description": "Diameter of the cylindrical conduit/fissure width",
-              "exclusiveMinimum": 0.0
+            'd': {
+              'type': 'number',
+              'title': 'Conduit diameter [m]',
+              'description': 'Diameter of the cylindrical conduit/fissure width',
+              'exclusiveMinimum': 0.0
             },
-            "fg": {
+            'fg': {
               # optional
-              "type": "number",
-              "title": "Mass flow rate [kg/s] (-g cylinder) or mass flow rate per "
-                "unit surface [kg/(s m^2)] (-g fissure)",
-              "description": "Initial guess for the mass flow rate along a "
-                "cylindrical conduit/fissure (optional, default value: 1.0E8/1.0E5).",
-              "exclusiveMinimum": 0.0
+              'type': 'number',
+              'title': 'Mass flow rate [kg/s] (-g cylinder) or mass flow rate per '
+                'unit surface [kg/(s m^2)] (-g fissure)',
+              'description': 'Initial guess for the mass flow rate along a '
+                'cylindrical conduit/fissure (optional, default value: 1.0E8/1.0E5).',
+              'exclusiveMinimum': 0.0
             },
           }
         },
@@ -293,21 +295,21 @@ INPUT_SCHEMA = {
           'title': '[placeholder per titolo 2]',
           'description': '[placeholder per description 2]',
           'required': ['f'],
-          "additionalProperties": False,
+          'additionalProperties': False,
           'properties': {
-            "f": {
-              "type": "number",
-              "title": "Mass flow rate [kg/s] (-g cylinder) or mass flow rate per "
-                "unit surface [kg/(s m^2)] (-g fissure)",
-              "description": "Mass flow rate along a cylindrical conduit/fissure.",
-              "exclusiveMinimum": 0.0
+            'f': {
+              'type': 'number',
+              'title': 'Mass flow rate [kg/s] (-g cylinder) or mass flow rate per '
+                'unit surface [kg/(s m^2)] (-g fissure)',
+              'description': 'Mass flow rate along a cylindrical conduit/fissure.',
+              'exclusiveMinimum': 0.0
             },
-            "dg": {
+            'dg': {
               # optional
-              "type": "number",
-              "title": "Conduit diameter [m]",
-              "description": "Initial guess for the diameter of the cylindrical conduit/fissure width",
-              "exclusiveMinimum": 0.0
+              'type': 'number',
+              'title': 'Conduit diameter [m]',
+              'description': 'Initial guess for the diameter of the cylindrical conduit/fissure width',
+              'exclusiveMinimum': 0.0
             },
           }
         },
@@ -710,70 +712,70 @@ PROCESS_METADATA = {
     },
     {
       'curl_example': (
-        "curl -i -k -L -X POST "
-        "\"https://voice.pi.ingv.it/geoinquire/processes/conduit/execution\" "
-        "-H \"Content-Type: application/json\" "
-        "-d '{"
-          "\"inputs\": {"
-            "\"melt_composition\": {"
-              "\"value\": {"
-                "\"sio2\": 0.7669, \"tio2\": 0.0012, \"al2o3\": 0.1322, "
-                "\"fe2o3\": 0.0039, \"feo\": 0.0038,  \"mno\": 0.0007, "
-                "\"mgo\": 0.0006, \"cao\": 0.0080, \"na2o\": 0.0300, "
-                "\"k2o\": 0.0512} }, "
-            "\"volatiles\": {"
-              "\"value\": {\"h2o\": 0.0500e0, \"co2\": 0.0200e0} }, "
-            "\"crystals\": {\"value\": {\"c\": 0.1, \"den\": 2800.0e0} }, "
-            "\"fragmentation\": {"
-              "\"value\": {"
-                "\"fe\": 0.2, \"pd\": 0.9, \"dp\": 200e-6, \"ds\": 200e-6,"
-                "\"dc\": 200e-6} }, "
-            "\"pressure_temperature\": {"
-              "\"value\": {\"p\": 1.0e8, \"t\": 1050.0e0} }, "
-            "\"geometry\": {\"value\": {\"g\": \"conduit\", \"l\": 4000.0e0} }, "
-            "\"searching_mode\": {\"value\": {\"f\": 0.88393e8} } "
-          "},"
-          "\"outputs\": {\"gas\": {},\"velocity\": {} } }'"
+        'curl -i -k -L -X POST '
+        '"https://voice.pi.ingv.it/geoinquire/processes/conduit/execution" '
+        '-H "Content-Type: application/json" '
+        '-d \'{'
+          '"inputs": {'
+            '"melt_composition": {'
+              '"value": {'
+                '"sio2": 0.7669, "tio2": 0.0012, "al2o3": 0.1322, '
+                '"fe2o3": 0.0039, "feo": 0.0038, "mno": 0.0007, '
+                '"mgo": 0.0006, "cao": 0.0080, "na2o": 0.0300, '
+                '"k2o": 0.0512} }, '
+            '"volatiles": {'
+              '"value": {"h2o": 0.0500e0, "co2": 0.0200e0} }, '
+            '"crystals": {"value": {"c": 0.1, "den": 2800.0e0} }, '
+            '"fragmentation": {'
+              '"value": {'
+                '"fe": 0.2, "pd": 0.9, "dp": 200e-6, "ds": 200e-6,'
+                '"dc": 200e-6} }, '
+            '"pressure_temperature": {'
+              '"value": {"p": 1.0e8, "t": 1050.0e0} }, '
+            '"geometry": {"value": {"g": "conduit", "l": 4000.0e0} }, '
+            '"searching_mode": {"value": {"f": 0.88393e8} } '
+          '},'
+          '"outputs": {"gas": {}, "velocity": {} } }\''
       )
     },
     {
       'curl_example_alsoByReference': (
-        "curl -i -k -L -X POST "
-        "\"https://voice.pi.ingv.it/geoinquire/processes/conduit/execution\" "
-        "-H \"Content-Type: application/json\" "
-        "-d '{"
-          "\"inputs\": {"
-            "\"melt_composition\": {"
-              "\"value\": {"
-                "\"sio2\": 0.7669, \"tio2\": 0.0012, \"al2o3\": 0.1322, "
-                "\"fe2o3\": 0.0039, \"feo\": 0.0038,  \"mno\": 0.0007, "
-                "\"mgo\": 0.0006, \"cao\": 0.0080, \"na2o\": 0.0300, "
-                "\"k2o\": 0.0512} }, "
-            "\"volatiles\": {"
-              "\"value\": {\"h2o\": 0.0500e0, \"co2\": 0.0200e0} }, "
-            "\"crystals\": {\"value\": {\"c\": 0.1, \"den\": 2800.0e0} }, "
-            "\"fragmentation\": {"
-              "\"value\": {"
-                "\"fe\": 0.2, \"pd\": 0.9, \"dp\": 200e-6, \"ds\": 200e-6,"
-                "\"dc\": 200e-6} }, "
-            "\"pressure_temperature\": {"
-              "\"value\": {\"p\": 1.0e8, \"t\": 1050.0e0} }, "
-            "\"geometry\": {\"value\": {\"g\": \"conduit\", \"l\": 4000.0e0} }, "
-            "\"searching_mode\": {\"value\": {\"f\": 0.88393e8} } "
-          "},"
-          "\"outputs\":{\"gas\":{\"transmissionMode\": \"reference\"}, "
-                       "\"velocity\":{\"transmissionMode\": \"value\"}}}'"
+        'curl -i -k -L -X POST '
+        '"https://voice.pi.ingv.it/geoinquire/processes/conduit/execution" '
+        '-H "Content-Type: application/json" '
+        '-d \'{'
+          '"inputs": {'
+            '"melt_composition": {'
+              '"value": {'
+                '"sio2": 0.7669, "tio2": 0.0012, "al2o3": 0.1322, '
+                '"fe2o3": 0.0039, "feo": 0.0038, "mno": 0.0007, '
+                '"mgo": 0.0006, "cao": 0.0080, "na2o": 0.0300, '
+                '"k2o": 0.0512} }, '
+            '"volatiles": {'
+              '"value": {"h2o": 0.0500e0, "co2": 0.0200e0} }, '
+            '"crystals": {"value": {"c": 0.1, "den": 2800.0e0} }, '
+            '"fragmentation": {'
+              '"value": {'
+                '"fe": 0.2, "pd": 0.9, "dp": 200e-6, "ds": 200e-6,'
+                '"dc": 200e-6} }, '
+            '"pressure_temperature": {'
+              '"value": {"p": 1.0e8, "t": 1050.0e0} }, '
+            '"geometry": {"value": {"g": "conduit", "l": 4000.0e0} }, '
+            '"searching_mode": {"value": {"f": 0.88393e8} } '
+          '},'
+          '"outputs":{"gas":{"transmissionMode": "reference"}, '
+                       '"velocity":{"transmissionMode": "value"}}}\''
       )
     },
     {
       'curl_jobStatus_request': 
-          "curl -k -L "
-          "\"https://voice.pi.ingv.it/jobs/<jobID>\""
+          'curl -k -L '
+          '"https://voice.pi.ingv.it/jobs/<jobID>"'
     },
     {
       'curl_jobResults_request': 
-          "curl -k -L "
-          "\"https://voice.pi.ingv.it/jobs/<jobID>/results\"?f=json"
+          'curl -k -L '
+          '"https://voice.pi.ingv.it/jobs/<jobID>/results\?f=json"'
     }
   ]
 
@@ -866,23 +868,23 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                 transmission_mode = req_outputs['gas'].get(
                     'transmissionMode', ''
                 )
-                if transmission_mode == "value":
+                if transmission_mode == 'value':
                     produced_outputs['gas']['value'] =  value
-                elif (transmission_mode == "reference"):
+                elif (transmission_mode == 'reference'):
                     dst_file = self.base_reference_path / (
-                        f"{self.job_id}_gas.json"
+                        f'{self.job_id}_gas.json'
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
                         json.dump(value, json_file)
 
                     file_href = (
-                        f"{self.base_reference_url}"
-                        f"{self.job_id}_gas.json"
+                        f'{self.base_reference_url}'
+                        f'{self.job_id}_gas.json'
                     )
                     produced_outputs['gas']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
-                    raise ProcessorExecuteError("Program error.")
+                    raise ProcessorExecuteError('Program error.')
 
             if 'velocity' in req_outputs:
                 value = {
@@ -913,23 +915,23 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                 transmission_mode = req_outputs['velocity'].get(
                     'transmissionMode', ''
                 )
-                if transmission_mode == "value":
+                if transmission_mode == 'value':
                     produced_outputs['velocity']['value'] =  value
-                elif (transmission_mode == "reference"):
+                elif (transmission_mode == 'reference'):
                     dst_file = self.base_reference_path / (
-                        f"{self.job_id}_velocity.json"
+                        f'{self.job_id}_velocity.json'
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
                         json.dump(value, json_file)
 
                     file_href = (
-                        f"{self.base_reference_url}"
-                        f"{self.job_id}_velocity.json"
+                        f'{self.base_reference_url}'
+                        f'{self.job_id}_velocity.json'
                     )
                     produced_outputs['velocity']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
-                    raise ProcessorExecuteError("Program error.")
+                    raise ProcessorExecuteError('Program error.')
 
 
             if 'pressure' in req_outputs:
@@ -955,77 +957,77 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                 transmission_mode = req_outputs['pressure'].get(
                     'transmissionMode', ''
                 )
-                if transmission_mode == "value":
+                if transmission_mode == 'value':
                     produced_outputs['pressure']['value'] =  value
-                elif (transmission_mode == "reference"):
+                elif (transmission_mode == 'reference'):
                     dst_file = self.base_reference_path / (
-                        f"{self.job_id}_pressure.json"
+                        f'{self.job_id}_pressure.json'
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
                         json.dump(value, json_file)
 
                     file_href = (
-                        f"{self.base_reference_url}"
-                        f"{self.job_id}_pressure.json"
+                        f'{self.base_reference_url}'
+                        f'{self.job_id}_pressure.json'
                     )
                     produced_outputs['pressure']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
-                    raise ProcessorExecuteError("Program error.")
+                    raise ProcessorExecuteError('Program error.')
 
             if 'outfile' in req_outputs:
                 produced_outputs['outfile'] = {'mediaType': 'text/csv'}
                 transmission_mode = req_outputs['outfile'].get(
                     'transmissionMode', ''
                 )
-                if transmission_mode == "value":
+                if transmission_mode == 'value':
                     with open(working_path / out_file_name) as f:
                         contenuto = f.read()
                     produced_outputs['outfile']['value'] = contenuto
-                elif (transmission_mode == "reference"):
+                elif (transmission_mode == 'reference'):
                     src_file = working_path / out_file_name
                     dst_file = self.base_reference_path / (
-                        f"{self.job_id}_outfile.csv"
+                        f'{self.job_id}_outfile.csv'
                     )
                     shutil.copy(src_file, dst_file)
 
                     file_href = (
-                        f"{self.base_reference_url}"
-                        f"{self.job_id}_outfile.csv"
+                        f'{self.base_reference_url}'
+                        f'{self.job_id}_outfile.csv'
                     )
                     produced_outputs['outfile']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
-                    raise ProcessorExecuteError("Program error.")
+                    raise ProcessorExecuteError('Program error.')
 
             if 'exit' in req_outputs:
                 produced_outputs['exit'] = {'mediaType': 'text/plain'}
                 transmission_mode = req_outputs['exit'].get(
                     'transmissionMode', ''
                 )
-                if transmission_mode == "value":
+                if transmission_mode == 'value':
                     with open(working_path / exit_file_name) as f:
                         contenuto = f.read()
                     produced_outputs['exit']['value'] = contenuto
-                elif (transmission_mode == "reference"):
+                elif (transmission_mode == 'reference'):
                     src_file = working_path / exit_file_name
                     dst_file = self.base_reference_path / (
-                        f"{self.job_id}_exit.txt"
+                        f'{self.job_id}_exit.txt'
                     )
                     shutil.copy(src_file, dst_file)
 
                     file_href = (
-                        f"{self.base_reference_url}"
-                        f"{self.job_id}_exit.txt"
+                        f'{self.base_reference_url}'
+                        f'{self.job_id}_exit.txt'
                     )
                     produced_outputs['exit']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
-                    raise ProcessorExecuteError("Program error.")
+                    raise ProcessorExecuteError('Program error.')
 
         except OSError as e:
-            LOGGER.error(f"Errore apertura file: {e}")
+            LOGGER.error(f'Errore apertura file: {e}')
             raise ProcessorExecuteError(
-                f"Program error: please report to the service provider "
-                "for this job_id: {info['job_id']}."
+                f'Program error: please report to the service provider '
+                f'for this job_id: {info["job_id"]}.'
             )
 
         return self.format_output(produced_outputs, req_outputs)
