@@ -1105,5 +1105,21 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
         
         return code_input_param
 
+    def remove_resources(self, job_id: str) -> None:
+        resource_file = self.base_reference_path / f"{job_id}_gas.json"
+        resource_file.unlink(missing_ok=True)
+
+        resource_file = self.base_reference_path / f"{job_id}_velocity.json"
+        resource_file.unlink(missing_ok=True)
+
+        resource_file = self.base_reference_path / f"{job_id}_pressure.json"
+        resource_file.unlink(missing_ok=True)
+
+        resource_file = self.base_reference_path / f"{job_id}_outfile.csv"
+        resource_file.unlink(missing_ok=True)
+
+        resource_file = self.base_reference_path / f"{job_id}_exit.txt"
+        resource_file.unlink(missing_ok=True)
+
     def __repr__(self):
         return f'<ConduitProcessor> {self.name}'

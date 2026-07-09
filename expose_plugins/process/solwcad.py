@@ -689,5 +689,12 @@ class SolwcadProcessor(BaseRemoteExecutionProcessorLocalReference):
 
         return code_input_param
 
+    def remove_resources(self, job_id: str) -> None:
+        resource_file = self.base_reference_path / f"{job_id}_solwcad_out.json"
+        resource_file.unlink(missing_ok=True)
+
+        resource_file = self.base_reference_path / f"{job_id}_solwcad_out.txt"
+        resource_file.unlink(missing_ok=True)
+
     def __repr__(self):
         return f'<SolwcadProcessor> {self.name}'
