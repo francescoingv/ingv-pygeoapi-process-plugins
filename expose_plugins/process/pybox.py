@@ -460,7 +460,7 @@ PROCESS_METADATA = {
 
   # not defined in process.yaml
   # >>>>>>>>>>>>>>>>>>>>>>>>>
-  'example': [
+  'examples': [
     {
       'payload_example': {
         'inputs': {
@@ -504,12 +504,12 @@ PROCESS_METADATA = {
     {
       'curl_jobStatus_request': 
           'curl -k -L '
-          '"https://voice.pi.ingv.it/jobs/<jobID>"'
+          '"https://voice.pi.ingv.it/geoinquire/jobs/<jobID>"'
     },
     {
       'curl_jobResults_request': 
           'curl -k -L '
-          '"https://voice.pi.ingv.it/jobs/<jobID>/results"?f=json'
+          '"https://voice.pi.ingv.it/geoinquire/jobs/<jobID>/results"?f=json'
     }
   ]
   # curl -k -L -X POST "https://voice.pi.ingv.it/geoinquire/processes/pybox/execution" -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" : 14.428, "lat" : 40.820, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : ["input_data", "dem", "spatial_evolution"] }'
@@ -636,6 +636,9 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
+                    # NOTE: should be added
+                    # value = json.dumps(value)
+                    # but this way compensate a bug in the framework.
                     produced_outputs['dem']['value'] = value
                 elif (transmission_mode == 'reference'):
                     dst_file = (
@@ -643,6 +646,10 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                         f'{self.job_id}_dem.json'
                     )
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
+                        # NOTE: value should already contain the JSON string,
+                        # but (as for the NOTE above) it is not.
+                        # When the bug in the framework is solved should be substituted by:
+                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (
@@ -707,6 +714,9 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
+                    # NOTE: should be added
+                    # value = json.dumps(value)
+                    # but this way compensate a bug in the framework.
                     produced_outputs['invasion_map']['value'] = value
                 elif (transmission_mode == 'reference'):
                     dst_file = (
@@ -714,6 +724,10 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                         f'{self.job_id}_invasion_map.json'
                     )
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
+                        # NOTE: value should already contain the JSON string,
+                        # but (as for the NOTE above) it is not.
+                        # When the bug in the framework is solved should be substituted by:
+                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (
@@ -864,6 +878,9 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
+                    # NOTE: should be added
+                    # value = json.dumps(value)
+                    # but this way compensate a bug in the framework.
                     produced_outputs['spatial_evolution']['value'] =  value
                 elif (transmission_mode == 'reference'):
                     dst_file = (
@@ -872,6 +889,10 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
+                        # NOTE: value should already contain the JSON string,
+                        # but (as for the NOTE above) it is not.
+                        # When the bug in the framework is solved should be substituted by:
+                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (
@@ -967,6 +988,9 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
+                    # NOTE: should be added
+                    # value = json.dumps(value)
+                    # but this way compensate a bug in the framework.
                     produced_outputs['deposit_thickness']['value'] =  value
                 elif (transmission_mode == 'reference'):
                     dst_file = (
@@ -975,6 +999,10 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
+                        # NOTE: value should already contain the JSON string,
+                        # but (as for the NOTE above) it is not.
+                        # When the bug in the framework is solved should be substituted by:
+                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (

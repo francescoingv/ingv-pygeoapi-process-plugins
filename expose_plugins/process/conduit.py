@@ -333,7 +333,7 @@ PROCESS_METADATA = {
   'id': 'conduit',
   # type string
 
-  'version': '2.2.0',
+  'version': '2.2.1',
   # type string
 
   # Optional properties:
@@ -643,7 +643,7 @@ PROCESS_METADATA = {
         '21) rate of strain [s^-1].',
       'schema': {
         'type': 'string',
-        'contentMediaType': 'text/csv'
+        'contentMediaType': 'text/csv; header=present'
       }
     },
     'exit': {
@@ -770,12 +770,12 @@ PROCESS_METADATA = {
     {
       'curl_jobStatus_request': 
           'curl -k -L '
-          '"https://voice.pi.ingv.it/jobs/<jobID>"'
+          '"https://voice.pi.ingv.it/geoinquire/jobs/<jobID>"'
     },
     {
       'curl_jobResults_request': 
           'curl -k -L '
-          '"https://voice.pi.ingv.it/jobs/<jobID>/results\?f=json"'
+          '"https://voice.pi.ingv.it/geoinquire/jobs/<jobID>/results\?f=json"'
     }
   ]
 
@@ -869,6 +869,9 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
+                    # NOTE: should be added
+                    # value = json.dumps(value)
+                    # but this way compensate a bug in the framework.
                     produced_outputs['gas']['value'] =  value
                 elif (transmission_mode == 'reference'):
                     dst_file = self.base_reference_path / (
@@ -876,6 +879,10 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
+                        # NOTE: value should already contain the JSON string,
+                        # but (as for the NOTE above) it is not.
+                        # When the bug in the framework is solved should be substituted by:
+                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (
@@ -916,6 +923,9 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
+                    # NOTE: should be added
+                    # value = json.dumps(value)
+                    # but this way compensate a bug in the framework.
                     produced_outputs['velocity']['value'] =  value
                 elif (transmission_mode == 'reference'):
                     dst_file = self.base_reference_path / (
@@ -923,6 +933,10 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
+                        # NOTE: value should already contain the JSON string,
+                        # but (as for the NOTE above) it is not.
+                        # When the bug in the framework is solved should be substituted by:
+                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (
@@ -932,7 +946,6 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     produced_outputs['velocity']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
                     raise ProcessorExecuteError('Program error.')
-
 
             if 'pressure' in req_outputs:
                 value = {
@@ -958,6 +971,9 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
+                    # NOTE: should be added
+                    # value = json.dumps(value)
+                    # but this way compensate a bug in the framework.
                     produced_outputs['pressure']['value'] =  value
                 elif (transmission_mode == 'reference'):
                     dst_file = self.base_reference_path / (
@@ -965,6 +981,10 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
+                        # NOTE: value should already contain the JSON string,
+                        # but (as for the NOTE above) it is not.
+                        # When the bug in the framework is solved should be substituted by:
+                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (
@@ -976,20 +996,58 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     raise ProcessorExecuteError('Program error.')
 
             if 'outfile' in req_outputs:
-                produced_outputs['outfile'] = {'mediaType': 'text/csv'}
+                header = [
+                    'verticalCoordinate_m',
+                    'gasInPumice_volumePerCent',
+                    'gasBeforeFragmentation_volumePerCent',
+                    'gasVelocity_mPers',
+                    'liquidVelocity_mPers',
+                    'pressure_MPa',
+                    'dissolvedH2O_massPerCent',
+                    'dissolvedCO2_massPerCent',
+                    'gasH2O_massPerCent',
+                    'gasCO2_massPerCent',
+                    'gasBeforeFragmentation_massPerCent',
+                    'crystals_volumePerCent',
+                    'crystals_massPerCent',
+                    'liquidPlusCrystalsPlusGasViscosity_Pas',
+                    'liquidPlusCrystalsViscosity_Pas',
+                    'liquidViscosity_Pas',
+                    'liquidPlusCrystalsPlusGasDensity_kgPerm3',
+                    'liquidPlusCrystalsDensity_kgPerm3',
+                    'liquidDensity_kgPerm3',
+                    'gasDensity_kgPerm3',
+                    'rateOfStrain_pers'
+                ]
+
+                produced_outputs['outfile'] = {'mediaType': 'text/csv; header=present'}
                 transmission_mode = req_outputs['outfile'].get(
                     'transmissionMode', ''
                 )
+
+                rows = [header]
+                with open(working_path / out_file_name) as f:
+                    for line in f:
+                        line = line.rstrip('\n')
+                        if not line:
+                            break
+                        
+                        fields = [field.replace('D', 'E').replace('d', 'e')
+                                  for field in line.split()]
+                        if len(fields) != len(header):
+                            raise ProcessorExecuteError(
+                                'Program error: report to the administrator'
+                            )
+                        rows.append(fields)
+
+                temp_value = '\n'.join(','.join(row) for row in rows)
                 if transmission_mode == 'value':
-                    with open(working_path / out_file_name) as f:
-                        contenuto = f.read()
-                    produced_outputs['outfile']['value'] = contenuto
+                    produced_outputs['outfile']['value'] = temp_value
                 elif (transmission_mode == 'reference'):
-                    src_file = working_path / out_file_name
                     dst_file = self.base_reference_path / (
                         f'{self.job_id}_outfile.csv'
                     )
-                    shutil.copy(src_file, dst_file)
+                    dst_file.write_text(temp_value, newline='')
 
                     file_href = (
                         f'{self.base_reference_url}'

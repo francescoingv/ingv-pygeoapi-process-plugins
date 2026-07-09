@@ -309,7 +309,10 @@ PROCESS_METADATA = {
   #   items: {type: string, enum: ['sync-execute', 'async-execute', 'dismiss']}
 
   'outputTransmission': [
-    'value', 'reference'
+    'value',
+# Currently the framework does not support all outputs by reference.
+# The processor have one output only, therefore reference is not supported.
+#    'reference' 
   ],
   # type: array, 
   #   items: {type: string, enum: ['value', 'reference'], default: 'value'}
@@ -492,12 +495,12 @@ PROCESS_METADATA = {
     {
       'curl_jobStatus_request': 
           'curl -k -L '
-          '"https://voice.pi.ingv.it/jobs/<jobID>"'
+          '"https://voice.pi.ingv.it/geoinquire/jobs/<jobID>"'
     },
     {
       'curl_jobResults_request': 
           'curl -k -L '
-          '"https://voice.pi.ingv.it/jobs/<jobID>/results?f=json"'
+          '"https://voice.pi.ingv.it/geoinquire/jobs/<jobID>/results?f=json"'
     }
   ]
 
@@ -566,6 +569,9 @@ class SolwcadProcessor(BaseRemoteExecutionProcessorLocalReference):
                 produced_outputs['solwcad_out'] = {'mediaType': mediaType}
 
                 if mediaType == 'application/json':
+                    # NOTE: should be
+                    # value = json.dumps(solwcad_out)
+                    # but this way compensate a bug in the framework.
                     value = solwcad_out
                 elif mediaType == 'text/plain':
                     value = '\n'.join(', '.join(row) for row in solwcad_out)
@@ -582,6 +588,10 @@ class SolwcadProcessor(BaseRemoteExecutionProcessorLocalReference):
                         filename = f'{self.job_id}_solwcad_out.json'
                         dst_file = Path(self.base_reference_path) / filename
                         with open(dst_file, 'w', encoding='utf-8') as out_file:
+                            # NOTE: value should already contain the JSON string,
+                            # but (as for the NOTE above) it is not.
+                            # When the bug in the framework is solved should be substituted by:
+                            # out_file.write(value)
                             json.dump(value, out_file)
                     elif mediaType == 'text/plain':
                         filename = f'{self.job_id}_solwcad_out.txt'
