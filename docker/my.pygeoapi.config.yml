@@ -62,7 +62,8 @@ server:
 
 # CUSTOM START HERE
     manager:
-        name: PostgreSQL
+        name: 'expose_plugins.process.manager.postgresql.PostgreSQLManagerWithDelete'
+#        name: PostgreSQL
         connection:
           host: $IP_ADDRESS_POSTGRES_SERVER$
           port: $PORT_POSTGRES_SERVER$
