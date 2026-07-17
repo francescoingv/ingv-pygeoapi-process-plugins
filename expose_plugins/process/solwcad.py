@@ -285,7 +285,24 @@ INPUT_SCHEMA = {
 }
 
 #: Process metadata and description
+NUMBER_PATTERN = (
+    r'([+-]?(?:[[:digit:]]+\.|[[:digit:]]*\.'
+    r'[[:digit:]]+))(?:[Dd][+-]?[[:digit:]]+)?'
+)
+
+ROW_PATTERN = (
+    NUMBER_PATTERN +
+    rf'(?:[ \t]+{NUMBER_PATTERN}){{14}}'
+)
+
+TABLE_PATTERN = (
+    rf'^{ROW_PATTERN}'
+    rf'(?:\r?\n{ROW_PATTERN})*'
+    rf'\r?\n?$'
+)
+
 PROCESS_METADATA = {
+    
   # process.yaml -> processSummary.yaml
   # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -404,8 +421,8 @@ PROCESS_METADATA = {
         'phase (kg/m3 ); Density of the two-phase magma (kg/m3 ); '
         'Viscosity of the melt phase [log (Pa s)]; Viscosity of '
         'the two-phase magma [log (Pa s)].',
-      'minOccurs': 1,
-      'maxOccurs': 1,
+#      'minOccurs': 1,
+#      'maxOccurs': 1,
       'schema': {
         'oneOf': [
           {
@@ -423,23 +440,25 @@ PROCESS_METADATA = {
                   r'[[:digit:]]+))(?:[Dd][+-]?[[:digit:]]+)?$',
               }
             },
-            'contentMediaType': 'application/json'
+#            'contentMediaType': 'application/json'
           },
           {
             'title': 'Plain text Array',
-            'type': 'array',
-            'minItems': 1,
-            'items': {
-              'type': 'array',
-              'minItems': 15,
-              'maxItems': 15,
-              'items': {
-                'type': 'string',
-                'pattern':
-                  r'^([+-]?(?:[[:digit:]]+\.|[[:digit:]]*\.'
-                  r'[[:digit:]]+))(?:[Dd][+-]?[[:digit:]]+)?$',
-              }
-            },
+#            'type': 'array',
+#            'minItems': 1,
+#            'items': {
+#              'type': 'array',
+#              'minItems': 15,
+#              'maxItems': 15,
+#              'items': {
+#                'type': 'string',
+#                'pattern':
+#                  r'^([+-]?(?:[[:digit:]]+\.|[[:digit:]]*\.'
+#                  r'[[:digit:]]+))(?:[Dd][+-]?[[:digit:]]+)?$',
+#              }
+#            },
+            'type': 'string',
+            'pattern': TABLE_PATTERN,
             'contentMediaType': 'text/plain'
           }
         ]
@@ -569,9 +588,6 @@ class SolwcadProcessor(BaseRemoteExecutionProcessorLocalReference):
                 produced_outputs['solwcad_out'] = {'mediaType': mediaType}
 
                 if mediaType == 'application/json':
-                    # NOTE: should be
-                    # value = json.dumps(solwcad_out)
-                    # but this way compensate a bug in the framework.
                     value = solwcad_out
                 elif mediaType == 'text/plain':
                     value = '\n'.join(', '.join(row) for row in solwcad_out)
@@ -588,10 +604,6 @@ class SolwcadProcessor(BaseRemoteExecutionProcessorLocalReference):
                         filename = f'{self.job_id}_solwcad_out.json'
                         dst_file = Path(self.base_reference_path) / filename
                         with open(dst_file, 'w', encoding='utf-8') as out_file:
-                            # NOTE: value should already contain the JSON string,
-                            # but (as for the NOTE above) it is not.
-                            # When the bug in the framework is solved should be substituted by:
-                            # out_file.write(value)
                             json.dump(value, out_file)
                     elif mediaType == 'text/plain':
                         filename = f'{self.job_id}_solwcad_out.txt'

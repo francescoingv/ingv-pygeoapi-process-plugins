@@ -53,7 +53,8 @@ server:
         attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
 
     manager:
-        name: PostgreSQL
+        name: 'expose_plugins.process.manager.postgresql.PostgreSQLManagerWithDelete'
+        # name: PostgreSQL
         connection:
           host: 127.0.0.1
           port: 5433

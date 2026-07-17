@@ -29,7 +29,7 @@
 
 import logging
 
-from pygeoapi.process.manager.base import PostgreSQLManager
+from pygeoapi.process.manager.postgresql import PostgreSQLManager
 
 LOGGER = logging.getLogger(__name__)
 

@@ -444,7 +444,7 @@ PROCESS_METADATA = {
       'description': 'Spatial evolution of current mean properties.',
       'schema': {
           '$ref': '#/$defs/chart',
-          'contentMediaType': 'application/json'
+#          'contentMediaType': 'application/json'
       }
     },
     'deposit_thickness': {
@@ -453,7 +453,7 @@ PROCESS_METADATA = {
         'Deposit thickness left by the current with distance from vent.',
       'schema': {
         '$ref': '#/$defs/chart',
-        'contentMediaType': 'application/json'
+#        'contentMediaType': 'application/json'
       }
     }
   },
@@ -636,9 +636,6 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
-                    # NOTE: should be added
-                    # value = json.dumps(value)
-                    # but this way compensate a bug in the framework.
                     produced_outputs['dem']['value'] = value
                 elif (transmission_mode == 'reference'):
                     dst_file = (
@@ -646,10 +643,6 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                         f'{self.job_id}_dem.json'
                     )
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
-                        # NOTE: value should already contain the JSON string,
-                        # but (as for the NOTE above) it is not.
-                        # When the bug in the framework is solved should be substituted by:
-                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (
@@ -714,9 +707,6 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
-                    # NOTE: should be added
-                    # value = json.dumps(value)
-                    # but this way compensate a bug in the framework.
                     produced_outputs['invasion_map']['value'] = value
                 elif (transmission_mode == 'reference'):
                     dst_file = (
@@ -724,10 +714,6 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                         f'{self.job_id}_invasion_map.json'
                     )
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
-                        # NOTE: value should already contain the JSON string,
-                        # but (as for the NOTE above) it is not.
-                        # When the bug in the framework is solved should be substituted by:
-                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (
@@ -878,9 +864,6 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
-                    # NOTE: should be added
-                    # value = json.dumps(value)
-                    # but this way compensate a bug in the framework.
                     produced_outputs['spatial_evolution']['value'] =  value
                 elif (transmission_mode == 'reference'):
                     dst_file = (
@@ -889,10 +872,6 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
-                        # NOTE: value should already contain the JSON string,
-                        # but (as for the NOTE above) it is not.
-                        # When the bug in the framework is solved should be substituted by:
-                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (
@@ -988,9 +967,6 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
-                    # NOTE: should be added
-                    # value = json.dumps(value)
-                    # but this way compensate a bug in the framework.
                     produced_outputs['deposit_thickness']['value'] =  value
                 elif (transmission_mode == 'reference'):
                     dst_file = (
@@ -999,10 +975,6 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
-                        # NOTE: value should already contain the JSON string,
-                        # but (as for the NOTE above) it is not.
-                        # When the bug in the framework is solved should be substituted by:
-                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (

@@ -596,7 +596,7 @@ PROCESS_METADATA = {
       'description': 'Profile of gas volume fraction along the conduit.',
       'schema': {
         '$ref': '#/$defs/chart',
-        'contentMediaType': 'application/json'
+#        'contentMediaType': 'application/json'
       }
     },
     'velocity': {
@@ -604,7 +604,7 @@ PROCESS_METADATA = {
       'description': 'Velocity profiles of liquid and gas along the conduit.',
       'schema': {
         '$ref': '#/$defs/chart',
-        'contentMediaType': 'application/json'
+#        'contentMediaType': 'application/json'
       }
     },
     'pressure': {
@@ -612,7 +612,7 @@ PROCESS_METADATA = {
       'description': 'Pressure profile along the conduit.',
       'schema': {
           '$ref': '#/$defs/chart',
-          'contentMediaType': 'application/json'
+#          'contentMediaType': 'application/json'
       }
     },
     'outfile': {
@@ -869,9 +869,6 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
-                    # NOTE: should be added
-                    # value = json.dumps(value)
-                    # but this way compensate a bug in the framework.
                     produced_outputs['gas']['value'] =  value
                 elif (transmission_mode == 'reference'):
                     dst_file = self.base_reference_path / (
@@ -879,10 +876,6 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
-                        # NOTE: value should already contain the JSON string,
-                        # but (as for the NOTE above) it is not.
-                        # When the bug in the framework is solved should be substituted by:
-                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (
@@ -923,9 +916,6 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
-                    # NOTE: should be added
-                    # value = json.dumps(value)
-                    # but this way compensate a bug in the framework.
                     produced_outputs['velocity']['value'] =  value
                 elif (transmission_mode == 'reference'):
                     dst_file = self.base_reference_path / (
@@ -933,10 +923,6 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
-                        # NOTE: value should already contain the JSON string,
-                        # but (as for the NOTE above) it is not.
-                        # When the bug in the framework is solved should be substituted by:
-                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (
@@ -971,9 +957,6 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     'transmissionMode', ''
                 )
                 if transmission_mode == 'value':
-                    # NOTE: should be added
-                    # value = json.dumps(value)
-                    # but this way compensate a bug in the framework.
                     produced_outputs['pressure']['value'] =  value
                 elif (transmission_mode == 'reference'):
                     dst_file = self.base_reference_path / (
@@ -981,10 +964,6 @@ class ConduitProcessor(BaseRemoteExecutionProcessorLocalReference):
                     )
 
                     with open(dst_file, 'w', encoding='utf-8') as json_file:
-                        # NOTE: value should already contain the JSON string,
-                        # but (as for the NOTE above) it is not.
-                        # When the bug in the framework is solved should be substituted by:
-                        # json_file.write(value)
                         json.dump(value, json_file)
 
                     file_href = (
