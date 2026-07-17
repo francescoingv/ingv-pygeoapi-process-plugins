@@ -58,7 +58,7 @@ INPUT_SCHEMA = {
       'type': 'object',
       'oneOf': [
         {
-          'title': '[placeholder per titolo 1]',
+          'title': 'Saturation surface for water and CO2',
           'description':
             'The computation is performed at user-defined P-T '
             'conditions in sw.data. H2O and CO2 contents in '
@@ -99,7 +99,7 @@ INPUT_SCHEMA = {
           }
         },
         {
-          'title': '[placeholder per titolo 2]',
+          'title': 'Saturation surface for water and CO2 at varying pressure (from P to atmospheric)',
           'description':
             'The computation is performed with reference to '
             'item ndat1 in sw.data, at constant user-defined '
@@ -144,7 +144,7 @@ INPUT_SCHEMA = {
           }
         },
         {
-          'title': '[placeholder per titolo 3]',
+          'title': 'Saturation surface for water and CO2 at varying temperature (from T to user-defined tlimit)',
           'description':
             'Same as for kl=1, but for fixed P (from sw.data) '
             'and T from the item ndat1 in sw.data to a '
@@ -209,7 +209,7 @@ INPUT_SCHEMA = {
           }
         },
         {
-          'title': '[placeholder per titolo 4]',
+          'title': 'Equilibrium pressure and fluid phase composition given dissolved water and CO2 in the magma',
           'description':
             'H2O and CO2 in sw.data items represent amounts '
             'dissolved in the melt phase. For user-defined '
