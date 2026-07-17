@@ -43,6 +43,24 @@ from expose_plugins.process.base_remote_execution import (
 
 LOGGER = logging.getLogger(__name__)
 
+NUMBER_PATTERN = (
+#    r'([+-]?(?:[[:digit:]]+\.|[[:digit:]]*\.'
+#    r'[[:digit:]]+))(?:[Dd][+-]?[[:digit:]]+)?'
+    r'[+-]?(?:[0-9]+\.|[0-9]*\.[0-9]+)'
+    r'(?:[Dd][+-]?[0-9]+)?'
+)
+
+ROW_PATTERN = (
+    NUMBER_PATTERN +
+    rf'(?:[ \t]+{NUMBER_PATTERN}){{14}}'
+)
+
+TABLE_PATTERN = (
+    rf'^{ROW_PATTERN}'
+    rf'(?:\r?\n{ROW_PATTERN})*'
+    rf'\r?\n?$'
+)
+
 INPUT_SCHEMA = {
   '$schema': 'https://json-schema.org/draft/2020-12/schema',
   '$id': 'https://example.com/schemas/solwcad_plugin_schema.json',
@@ -80,17 +98,21 @@ INPUT_SCHEMA = {
           'properties': {
             'ndat1': {
               'type': 'integer',
+              'title': '[placeholder for title of ndat1]',
               'description':
                 'Computations are performed from item '
                 'ndat1 of sw.data'
             },
             'ndat2': {
               'type': 'integer',
+              'title': '[placeholder for title of ndat2]',
               'description':
                 'Computations are performed up to item '
                 'ndat2 of sw.data'
             },
             'kl': {
+              'title': '[placeholder for title of kl]',
+              'description': '[placeholder for description of kl]',
               'type': 'integer',
               'enum': [0]  # the only one accepted value
             }
@@ -114,26 +136,31 @@ INPUT_SCHEMA = {
           'properties': {
             'ndat1': {
               'type': 'integer',
+              'title': '[placeholder for title of ndat1]',
               'description':
                 'Computations are performed from item '
                 'ndat1 of sw.data'
             },
             'kl': {
+              'title': '[placeholder for title of kl]',
+              'description': '[placeholder for description of kl]',
               'type': 'integer',
               'enum': [1],  # the only one accepted value
             },
             'iopen': {
               'type': 'integer',
               'enum': [0, 1],
+              'title': '[placeholder for title of iopen]',
               'description':
                 '0 for closed-system calculations, '
                 '1 for open system calculations.'
             },
             'fopen': {
               'type': 'string',
-              'pattern':
-                r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
-                r'([Dd][+-]?[\d]+)?$',
+              'pattern': rf'^{NUMBER_PATTERN}$',
+#                r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
+#                r'([Dd][+-]?[\d]+)?$',
+              'title': '[placeholder for title of fopen]',
               'description':
                 'Only used with iopen =1. It specifies '
                 'the weight fraction of fluid phase lost '
@@ -161,26 +188,31 @@ INPUT_SCHEMA = {
           'properties': {
             'ndat1': {
               'type': 'integer',
+              'title': '[placeholder for title of ndat1]',
               'description':
                 'Computations are performed on item ndat1 '
                 'of sw.data'
             },
             'kl': {
+              'title': '[placeholder for title of kl]',
+              'description': '[placeholder for description of kl]',
               'type': 'integer',
               'enum': [2],  # the only one accepted value
             },
             'iopen': {
               'type': 'integer',
               'enum': [0, 1],
+              'title': '[placeholder for title of iopen]',
               'description':
                 '0 for closed-system calculations, '
                 '1 for open system calculations.'
             },
             'fopen': {
               'type': 'string',
-              'pattern':
-                r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
-                r'([Dd][+-]?[\d]+)?$',
+              'pattern': rf'^{NUMBER_PATTERN}$',
+#                r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
+#                r'([Dd][+-]?[\d]+)?$',
+              'title': '[placeholder for title of fopen]',
               'description':
                 'Only used with iopen =1. It specifies '
                 'the weight fraction of fluid phase lost '
@@ -188,18 +220,20 @@ INPUT_SCHEMA = {
             },
             'dt': {
               'type': 'string',
-              'pattern':
-                r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
-                r'([Dd][+-]?[\d]+)?$',
+              'pattern': rf'^{NUMBER_PATTERN}$',
+#                r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
+#                r'([Dd][+-]?[\d]+)?$',
+              'title': '[placeholder for title of dt]',
               'description':
                 'The length of the T-steps (either '
                 'positive or negative).'
             },
             'tlimit': {
               'type': 'string',
-              'pattern':
-                r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
-                r'([Dd][+-]?[\d]+)?$',
+              'pattern': rf'^{NUMBER_PATTERN}$',
+#                r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
+#                r'([Dd][+-]?[\d]+)?$',
+              'title': '[placeholder for title of tlimit]',
               'description':
                 'The temperature up to which separate '
                 'computations are performed. It can be '
@@ -228,17 +262,21 @@ INPUT_SCHEMA = {
           'properties': {
             'ndat1': {
               'type': 'integer',
+              'title': '[placeholder for title of ndat1]',
               'description':
                 'Computations are performed on item ndat1 '
                 'of sw.data'
             },
             'ndat2': {
               'type': 'integer',
+              'title': '[placeholder for title of ndat2]',
               'description':
                 'Computations are performed up to item '
                 'ndat2 of sw.data'
             },
             'kl': {
+              'title': '[placeholder for title of kl]',
+              'description': '[placeholder for description of kl]',
               'type': 'integer',
               'enum': [-1],   # the only one accepted value
             }
@@ -275,9 +313,9 @@ INPUT_SCHEMA = {
         'maxItems': 14,
         'items': {
           'type': 'string',
-          'pattern':
-            r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
-            r'([Dd][+-]?[\d]+)?$',
+          'pattern': rf'^{NUMBER_PATTERN}$',
+#            r'^([+-]?([\d]+\.|[\d]*\.[\d]+))'
+#            r'([Dd][+-]?[\d]+)?$',
         }
       }
     }
@@ -285,22 +323,6 @@ INPUT_SCHEMA = {
 }
 
 #: Process metadata and description
-NUMBER_PATTERN = (
-    r'([+-]?(?:[[:digit:]]+\.|[[:digit:]]*\.'
-    r'[[:digit:]]+))(?:[Dd][+-]?[[:digit:]]+)?'
-)
-
-ROW_PATTERN = (
-    NUMBER_PATTERN +
-    rf'(?:[ \t]+{NUMBER_PATTERN}){{14}}'
-)
-
-TABLE_PATTERN = (
-    rf'^{ROW_PATTERN}'
-    rf'(?:\r?\n{ROW_PATTERN})*'
-    rf'\r?\n?$'
-)
-
 PROCESS_METADATA = {
     
   # process.yaml -> processSummary.yaml
@@ -435,9 +457,9 @@ PROCESS_METADATA = {
               'maxItems': 15,
               'items': {
                 'type': 'string',
-                'pattern':
-                  r'^([+-]?(?:[[:digit:]]+\.|[[:digit:]]*\.'
-                  r'[[:digit:]]+))(?:[Dd][+-]?[[:digit:]]+)?$',
+                'pattern': rf'^{NUMBER_PATTERN}$',
+#                  r'^([+-]?(?:[[:digit:]]+\.|[[:digit:]]*\.'
+#                  r'[[:digit:]]+))(?:[Dd][+-]?[[:digit:]]+)?$',
               }
             },
 #            'contentMediaType': 'application/json'

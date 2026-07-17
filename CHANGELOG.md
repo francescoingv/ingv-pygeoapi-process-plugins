@@ -56,6 +56,7 @@ https://github.com/opengeospatial/ogcapi-processes/issues/601
 SOLWCAD:
 - in metadata removed in 'outputTransmission' the item 'reference' (until the
 framework will solve issue on returning reference only)
+- in metadata changed the pattern to be more portable and efficient
 - output 'solwcad_out' now available in two format:
   - as 'type'='array' (therefore can be requested with 
   'format': {'mediaType': 'application/json'} )
