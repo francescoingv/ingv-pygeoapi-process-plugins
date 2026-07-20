@@ -142,7 +142,7 @@ INPUT_SCHEMA = {
                 'ndat1 of sw.data'
             },
             'kl': {
-              'title': '[placeholder for title of kl]',
+              'title': 'calculation method',
               'description': '[placeholder for description of kl]',
               'type': 'integer',
               'enum': [1],  # the only one accepted value
@@ -194,7 +194,7 @@ INPUT_SCHEMA = {
                 'of sw.data'
             },
             'kl': {
-              'title': '[placeholder for title of kl]',
+              'title': 'calculation method',
               'description': '[placeholder for description of kl]',
               'type': 'integer',
               'enum': [2],  # the only one accepted value
@@ -275,7 +275,7 @@ INPUT_SCHEMA = {
                 'ndat2 of sw.data'
             },
             'kl': {
-              'title': '[placeholder for title of kl]',
+              'title': 'calculation method',
               'description': '[placeholder for description of kl]',
               'type': 'integer',
               'enum': [-1],   # the only one accepted value
