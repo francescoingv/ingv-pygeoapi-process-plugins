@@ -1051,19 +1051,31 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
         return code_input_param
 
     def remove_resources(self, job_id: str) -> None:
-        resource_file = self.base_reference_path / f"{job_id}_input_data.txt"
+        resource_file = self.base_reference_path / f'{job_id}_input_data.txt'
         resource_file.unlink(missing_ok=True)
 
-        resource_file = self.base_reference_path / f"{job_id}_dem.json"
+        resource_file = self.base_reference_path / f'{job_id}_dem.json'
         resource_file.unlink(missing_ok=True)
 
-        resource_file = self.base_reference_path / f"{job_id}_invasion_map.json"
+        resource_file = self.base_reference_path / f'{job_id}_dem.tif'
         resource_file.unlink(missing_ok=True)
 
-        resource_file = self.base_reference_path / f"{job_id}_spatial_evolution.json"
+        resource_file = self.base_reference_path / f'{job_id}_dem.sld'
         resource_file.unlink(missing_ok=True)
 
-        resource_file = self.base_reference_path / f"{job_id}_deposit_thickness.json"
+        resource_file = self.base_reference_path / f'{job_id}_invasion_map.json'
+        resource_file.unlink(missing_ok=True)
+
+        resource_file = self.base_reference_path / f'{job_id}_invasion_map.tif'
+        resource_file.unlink(missing_ok=True)
+
+        resource_file = self.base_reference_path / f'{job_id}_invasion_map.sld'
+        resource_file.unlink(missing_ok=True)
+
+        resource_file = self.base_reference_path / f'{job_id}_spatial_evolution.json'
+        resource_file.unlink(missing_ok=True)
+
+        resource_file = self.base_reference_path / f'{job_id}_deposit_thickness.json'
         resource_file.unlink(missing_ok=True)
 
     def __repr__(self):
