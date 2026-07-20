@@ -16,7 +16,7 @@ Minor fixes.
 ## [1.1.1] - 2026-06-29
 Fixed reference to pygeoapi project.
 
-## [1.2.0] - 2026-07-17
+## [1.2.0] - 2026-07-20
 Unified string delimiter overall the project to be single quotes.
 
 Use of a temporary custom Manager (PostgreSQLManagerWithDelete) to handle

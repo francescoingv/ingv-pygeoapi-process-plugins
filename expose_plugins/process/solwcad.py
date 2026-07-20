@@ -98,20 +98,20 @@ INPUT_SCHEMA = {
           'properties': {
             'ndat1': {
               'type': 'integer',
-              'title': '[placeholder for title of ndat1]',
+              'title': 'first line to perform calculations for',
               'description':
                 'Computations are performed from item '
                 'ndat1 of sw.data'
             },
             'ndat2': {
               'type': 'integer',
-              'title': '[placeholder for title of ndat2]',
+              'title': 'last line to perform calculations for',
               'description':
                 'Computations are performed up to item '
                 'ndat2 of sw.data'
             },
             'kl': {
-              'title': '[placeholder for title of kl]',
+              'title': 'calculation method',
               'description': '[placeholder for description of kl]',
               'type': 'integer',
               'enum': [0]  # the only one accepted value
@@ -136,7 +136,7 @@ INPUT_SCHEMA = {
           'properties': {
             'ndat1': {
               'type': 'integer',
-              'title': '[placeholder for title of ndat1]',
+              'title': 'first line to perform calculations for',
               'description':
                 'Computations are performed from item '
                 'ndat1 of sw.data'
@@ -188,7 +188,7 @@ INPUT_SCHEMA = {
           'properties': {
             'ndat1': {
               'type': 'integer',
-              'title': '[placeholder for title of ndat1]',
+              'title': 'first line to perform calculations for',
               'description':
                 'Computations are performed on item ndat1 '
                 'of sw.data'
@@ -262,14 +262,14 @@ INPUT_SCHEMA = {
           'properties': {
             'ndat1': {
               'type': 'integer',
-              'title': '[placeholder for title of ndat1]',
+              'title': 'first line to perform calculations for',
               'description':
                 'Computations are performed on item ndat1 '
                 'of sw.data'
             },
             'ndat2': {
               'type': 'integer',
-              'title': '[placeholder for title of ndat2]',
+              'title': 'last line to perform calculations for',
               'description':
                 'Computations are performed up to item '
                 'ndat2 of sw.data'
