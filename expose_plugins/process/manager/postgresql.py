@@ -59,7 +59,7 @@ class PostgreSQLManagerWithDelete(PostgreSQLManager):
         # get process used for the job.
         process_id = self.get_job(job_id).get('process_id')
 
-        deleted = super.deleteJob(job_id)
+        deleted = super().delete_job(job_id)
         if (deleted):
             # remove resources if present
             processor = self.get_processor(process_id)
