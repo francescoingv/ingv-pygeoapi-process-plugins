@@ -269,7 +269,7 @@ INPUT_SCHEMA = {
       'type': 'object',
       'oneOf': [
         {
-          'title': '[placeholder per titolo 1]',
+          'title': 'mass flow rate',
           'description': '[placeholder per description 1]',
           'required': ['d'],
           'additionalProperties': False,
@@ -292,7 +292,7 @@ INPUT_SCHEMA = {
           }
         },
         {
-          'title': '[placeholder per titolo 2]',
+          'title': 'conduit diameter',
           'description': '[placeholder per description 2]',
           'required': ['f'],
           'additionalProperties': False,
