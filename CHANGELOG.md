@@ -64,6 +64,16 @@ framework will solve issue on returning reference only)
   (therefore can be requested with 'format': {'mediaType': 'text/plain'} )
 Changed the schema for 'solwcad_out' accordingly.
 
+## [1.2.1] - 2026-??-??
+Minor fix to PostgreSQLManagerWithDelete.delete_job()
+
+In BaseRemoteExecutionProcessor, fixed format_output()
+to properly handle binary output (e.g. Tiff or png)
+
+SOLWCAD:
+- in metadata: changed title and description of several items
+- added output 'overlay_image' returning a png image
+
 
 
 

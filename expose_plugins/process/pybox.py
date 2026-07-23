@@ -60,45 +60,45 @@ INPUT_SCHEMA = {
   'properties': {
     'lat': {
       'title': 'Latitude',
-      'description': 'Geographic latitude of the vent in Decimal degrees',
+      'description': 'Vent latitude (decimal degrees)',
       'type': 'number',
       'minimum': -90.0,
       'maximum': 90.0
     },
     'lon': {
       'title': 'Longitude',
-      'description': 'Geographic longitude of the vent in Decimal degrees',
+      'description': 'Vent longitude (decimal degrees)',
       'type': 'number',
       'minimum': -180.0,
       'maximum': 180.0
     },
     'l0': {
-      'title': 'Initial Radius',
-      'description': 'Initial horizontal extent (l0) of the current in meters',
+      'title': 'Initial front distance',
+      'description': 'Initial PDC front distance from the vent',
       'type': 'number',
       'minimum': 100.0,
       'maximum': 2000.0
     },
     'h0': {
       'title': 'Initial height',
-      'description': 'Initial vertical thickness (h0) of the current in meters',
+      'description': 'Initial PDC thickness (m)',
       'type': 'number',
       'minimum': 100.0,
       'maximum': 2000.0
     },
     'theta0': {
       'title': 'Temperature',
-      'description': 'Initial temperature of the current in Kelvin',
+      'description': 'Initial PDC temperature (K)',
       'type': 'number',
       'minimum': 300.0,
       'maximum': 1400.0
     },
     'multiple_values': {
-      'title': 'Multiple particle classes',
+      'title': 'Multiple particle-size classes',
       'description': (
-        'When simulating multiple particle classes, the volume fraction '
-        '(eps0), density (rhos), and diameter (ds) of each class should be '
-        'specified and the sum of eps0 must be < 1'
+        'A separate set of parameters must be provided for each particle-size '
+        'class: volume fraction (eps0), density (rhos), and diameter (ds). '
+        'The sum of all particle volume fractions (eps0) must be < 1'
       ),
       'type': 'array',
       'minItems': 1,
@@ -110,14 +110,18 @@ INPUT_SCHEMA = {
         'properties': {
           'eps0': {
             'title': 'Particle volume fraction',
-            'description': 'Volume fraction of particle class',
+            'description':
+              'Volume fraction occupied by each particle-size class. '
+              'Range: 0.001-0.1',
             'type': 'number',
             'minimum': 0.001,
             'maximum': 0.1
           },
           'rhos': {
             'title': 'Particle density',
-            'description': 'Density of particle class in kg/m3',
+            'description':
+              'Density of the solid particles in each particle size-class '
+              '(kg/m3). Range: 500-3500 kg/m3',
             'type': 'number',
             'minimum': 500.0,
             'maximum': 3500.0
@@ -125,7 +129,8 @@ INPUT_SCHEMA = {
           'ds': {
             'title': 'Particle diameter',
             'description':
-              'Diameter of particle class (10 micron-5 mm) in meters',
+              'Characteristic diameter of particles in each particle-size '
+              'class (m). Range: 1e-5-5e-3 (10 micron-5 mm)',
             'type': 'number',
             'minimum': 0.00001,
             'maximum': 0.005
@@ -136,7 +141,7 @@ INPUT_SCHEMA = {
     'dt': {
       'title': 'Time step',
       'description':
-        'Temporal resolution of the numerical integration in seconds',
+        'Numerical integration time step (s)',
       'type': 'number',
       'minimum': 0.1,
       'maximum': 30.0
@@ -144,8 +149,9 @@ INPUT_SCHEMA = {
     'margin': {
       'title': 'Margin',
       'description': (
-          '-x, -y, x, y distance from the given vent location '
-          '(i.e. bounding box of the requested DSM) in meters'
+          'Single distance value (m) from the given vent location applied '
+          'equally in the -x, x and -y, y directions to define the '
+          'topography spatial extent'
       ),
       'type': 'number',
       'minimum': 5000,
@@ -169,7 +175,7 @@ PROCESS_METADATA = {
   'id': 'pybox',
   # type string
 
-  'version': '1.0.0',
+  'version': '1.1.0',
   # type string
 
   # optional properties:
@@ -239,12 +245,12 @@ PROCESS_METADATA = {
   # type: string
 
   'description':
-    'Python code to simulate the dispersals of a gravity-driven '
-    'pyroclastic density current (PDC) using a box model physical '
-    'description. It produces a 2D invasion area adopting the '
-    'energy conoid approach and using a Digital Surface Model '
-    '(DSM) as topography. '
-    'Note: the script supports multiple particle classes.',
+    'PyBOX is a Python software for simulating the propagation of '
+    'gravity-driven pyroclastic density currents (PDCs) using a box-model '
+    'approach. It predicts two-dimensional inundation areas using the '
+    'energy-conoid method and topography derived from the Copernicus '
+    'GLO-30 Digital Elevation Model (DEM), a DSM-product. '
+    'Simulations support multiple particle-size classes',
   # type: string
     
   'keywords': ['Python code', 'Box model', 'Pyroclastic density currents',
@@ -337,20 +343,21 @@ PROCESS_METADATA = {
   'outputs': {
     'input_data': {
       'title': 'Input parameters',
-      'description': 'Log of all input parameters used',
+      'description': 'Summary of input parameters used in the simulation',
       'schema': {
           'type': 'string',
           'contentMediaType': 'text/plain'
       }
     },
     'dem': {
-      'title': 'Primary DEM',
-      'description': 'The local DSM (GeoTIFF) used for the simulation.',
+      'title': 'Input topography',
+      'description':
+        'Digital elevation data used as terrain input for the simulation',
       'schema': {
         'type': 'object',
         'properties': {
           'geotiff': {
-            'description': 'Reference to the GeoTIFF.',
+            'description': 'Reference to the GeoTIFF',
             'allOf': [
               {
                 '$ref': 'link.yaml'
@@ -371,7 +378,7 @@ PROCESS_METADATA = {
           },
           'sld': {
             'description': 'Reference to the Styled Layer Descriptor (SLD) '
-                    'defining the visualization style for this GeoTIFF.',
+                    'defining the visualization style for this GeoTIFF',
             'allOf': [
               {
                 '$ref': 'link.yaml'
@@ -391,15 +398,15 @@ PROCESS_METADATA = {
       }
     },
     'invasion_map': {
-      'title': 'Invasion Map',
+      'title': 'PDC invasion area',
       'description':
-        '2D GeoTIFF showing PDC invaded area, '
-        'based on the energy conoid method.',
+        'Two-dimensional inundation extent computed '
+        'using the energy-conoid approach',
       'schema': {
         'type': 'object',
         'properties': {
           'geotiff': {
-            'description': 'Reference to the GeoTIFF.',
+            'description': 'Reference to the GeoTIFF',
             'allOf': [
               {
                 '$ref': 'link.yaml'
@@ -420,7 +427,7 @@ PROCESS_METADATA = {
           },
           'sld': {
             'description': 'Reference to the Styled Layer Descriptor (SLD) '
-                    'defining the visualization style for this GeoTIFF.',
+                    'defining the visualization style for this GeoTIFF',
             'allOf': [
               {
                 '$ref': 'link.yaml'
@@ -440,22 +447,35 @@ PROCESS_METADATA = {
       }
     },
     'spatial_evolution': {
-      'title': 'Spatial evolution of current mean properties.',
-      'description': 'Spatial evolution of current mean properties.',
+      'title': 'Mean PDC properties',
+      'description':
+        'Evolution of mean PDC properties as function '
+        'of distance from the vent',
       'schema': {
           '$ref': '#/$defs/chart',
 #          'contentMediaType': 'application/json'
       }
     },
     'deposit_thickness': {
-      'title': 'Deposit thickness left by the current with distance from vent.',
+      'title': 'PDC deposit',
       'description':
-        'Deposit thickness left by the current with distance from vent.',
+        'Deposit thickness decay with distance from the vent',
       'schema': {
         '$ref': '#/$defs/chart',
 #        'contentMediaType': 'application/json'
       }
-    }
+    },
+    'overlay_image': {
+      'title': 'PDC invasion area over input topography',
+      'description':
+        'Simulated inundation extent overlaid '
+        'on the input topography used for the simulation',
+      'schema': {
+        'type': 'string',
+        'contentEncoding': 'binary',
+        'contentMediaType': 'image/png'
+      }
+    },
   },
 
   # not defined in process.yaml
@@ -520,9 +540,9 @@ PROCESS_METADATA = {
   #       -d '{ "inputs" : { "lon" : 14.428, "lat" : 40.820, "l0" : 150, "h0" : 150, 
   #                          "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}], 
   #                          "dt" : 0.5, "margin" : 5000 }}'
-  # curl localhost:5000/processes/pybox/execution -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" : 14.428, "lat" : 40.820, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : ["input_data", "dem", "spatial_evolution"] }'
-  # curl localhost:5000/processes/pybox/execution -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" : { "value" : 14.428 }, "lat" : 40.820, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : ["input_data", "dem", "spatial_evolution"] }'
-  # curl localhost:5000/processes/pybox/execution -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" : "lon" : 14.428, "lat" : 40.820, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : {"input_data": { "transmissionMode": "value" }, "dem" : { "transmissionMode": "value" }, "spatial_evolution": { "transmissionMode": "value" } } }'
+  # curl localhost:5000/processes/pybox/execution -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" : 14.428, "lat" : 40.820, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : {"input_data": {}, "dem": {}, "spatial_evolution":{}} }'
+  # curl localhost:5000/processes/pybox/execution -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" : { "value" : 14.428 }, "lat" : 40.820, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : {"input_data": {}, "dem": {}, "spatial_evolution": {}} }'
+  # curl localhost:5000/processes/pybox/execution -H 'Content-Type: application/json' -d '{ "inputs" : { "lon" : 14.428, "lat" : 40.820, "l0" : 150, "h0" : 150, "theta0" : 500, "multiple_values" : [{"eps0": 0.01, "rhos": 1000, "ds": 0.0001}],"dt" : 0.5, "margin" : 5000 }, "outputs" : {"input_data": { "transmissionMode": "value" }, "dem" : { "transmissionMode": "value" }, "spatial_evolution": { "transmissionMode": "value" } } }'
   #
 }
 
@@ -982,6 +1002,38 @@ class PyboxProcessor(BaseRemoteExecutionProcessorLocalReference):
                         f'{self.job_id}_deposit_thickness.json'
                     )
                     produced_outputs['deposit_thickness']['href'] = file_href
+                else: # should never happen: cheched in _check_output_request()
+                    raise ProcessorExecuteError('Program error.')
+
+            if 'overlay_image' in req_outputs:
+                produced_outputs['overlay_image'] = {'mediaType': 'image/png'}
+                transmission_mode = req_outputs['overlay_image'].get(
+                    'transmissionMode', ''
+                )
+
+                if transmission_mode == 'value':
+                    with open(
+                        working_path / 
+                        f'{self.base_output_filename}_overlay.png', 'rb'
+                    ) as output_file:
+                        contenuto = output_file.read()
+                    produced_outputs['overlay_image']['value'] = contenuto
+                elif (transmission_mode == 'reference'):
+                    src_file = (
+                        working_path /
+                        f'{self.base_output_filename}_overlay.png'
+                    )
+                    dst_file = (
+                        self.base_reference_path /
+                        f'{self.job_id}_overlay_image.png'
+                    )
+                    shutil.copy(src_file, dst_file)
+
+                    file_href = (
+                        f'{self.base_reference_url}'
+                        f'{self.job_id}_overlay_image.png'
+                    )
+                    produced_outputs['overlay_image']['href'] = file_href
                 else: # should never happen: cheched in _check_output_request()
                     raise ProcessorExecuteError('Program error.')
 

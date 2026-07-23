@@ -29,6 +29,7 @@
 
 import base64
 import copy
+import json
 import logging
 import os
 from typing import Any, Optional, Tuple
@@ -420,22 +421,42 @@ class BaseRemoteExecutionProcessor(BaseProcessor):
             media_type = output['mediaType']
             if 'value' in output:
                 value = output['value']
-                # prepare payload. NOTE: type(payload)==bytes
-                if output.get('encoding') == 'base64':
-                    LOGGER.debug(f'output.get("encoding") == "base64"')
-                    # the "value" is expected to be a "string" of a binary data encoded base64
-                    payload = value.encode('utf-8')
-                    transfer_encoding = 'base64'
+
+                if isinstance(value, (bytes, bytearray)):
+                    # Pure binary, e.g. TIFF
+                    payload = bytes(value)
+                    transfer_encoding = "binary"
+#                if output.get('encoding') == 'base64':
+#                    LOGGER.debug(f'output.get("encoding") == "base64"')
+#                    # the "value" is expected to be a "string" of a binary data encoded base64
+#                    payload = value.encode('utf-8')
+#                    transfer_encoding = 'base64'
+                elif media_type.startswith("application/json"):
+                    # JSON 
+                    if isinstance(value, str):
+                        payload = value.encode("utf-8")
+                    else: # just it was not already converted to JSON
+                        payload = json.dumps(value, ensure_ascii=False).encode("utf-8")
+                    transfer_encoding = "8bit"
+                elif media_type.startswith("text/plain"):
+                    # text
+                    payload = str(value).encode("utf-8")
+                    transfer_encoding = "8bit"
                 else:
-                    if isinstance(value, (dict, list)):
-                        import json
-                        payload = json.dumps(value).encode('utf-8')
-                    else:
-                        # It is expected to be a string or bytes
-                        if (type(value) == bytes):
-                            payload = value
-                        payload = value.encode('utf-8')
-                    transfer_encoding = '8bit'
+                    # other cases...
+                    payload = str(value).encode("utf-8")
+                    transfer_encoding = "8bit"
+
+#                else:
+#                    if isinstance(value, (dict, list)):
+#                        import json
+#                        payload = json.dumps(value).encode('utf-8')
+#                    else:
+#                        # It is expected to be a string or bytes
+#                        if (type(value) == bytes):
+#                            payload = value
+#                        payload = value.encode('utf-8')
+#                    transfer_encoding = '8bit'
 
                 part = (
                     f'--{boundary}\r\n'
